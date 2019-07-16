@@ -1,20 +1,29 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+/* Dependencies
+ *****************************************/
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const session = require('express-session');
+//const expressValidator = require('express-validator');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var passport = require('passport');
-var GitHubStrategy = require('passport-github').Strategy;
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+const passport = require('passport');
+const GitHubStrategy = require('passport-github').Strategy;
+const config = require('./config');
 
-var app = express();
+const app = express();
 
-// view engine setup
+/* View engine set-up
+ *****************************************/
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+/* Middleware
+ *****************************************/
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -23,9 +32,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(
-  require('express-session')({
-    secret: 'keyboard cat',
-    resave: true,
+  session({
+    secret: config.passport.secret,
+    resave: false,
     saveUninitialized: true
   })
 );
@@ -33,17 +42,17 @@ app.use(
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 
-//app.use(passport.initialize());
-//app.use(passport.session());
-
+/* Passport strategy
+ *****************************************/
 passport.use(
   new GitHubStrategy(
     {
-      clientID: '2e612032528b03b657ee',
-      clientSecret: '35700ce740074985fde673261729331452c2f886',
-      callbackURL: 'http://127.0.0.1:3000/auth/github/callback'
+      clientID: config.github.id,
+      clientSecret: config.github.secret,
+      callbackURL: 'http://localhost:3000/auth/github/callback'
     },
-    function(accessToken, refreshToken, profile, cb) {
+    (accessToken, refreshToken, profile, cb) => {
+      console.log('TIME TO FIND OR CREATE USER');
       User.findOrCreate({ githubId: profile.id }, function(err, user) {
         return cb(err, user);
       });
@@ -51,21 +60,49 @@ passport.use(
   )
 );
 
-passport.serializeUser(function(user, cb) {
+passport.serializeUser((user, cb) => {
   cb(null, user);
 });
 
-passport.deserializeUser(function(obj, cb) {
+passport.deserializeUser((obj, cb) => {
   cb(null, obj);
 });
 
+app.use(passport.initialize());
+app.use(passport.session());
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
+app.get('/', (req, res, next) => {
+  res.render('index');
+});
+
+app.get('/login/github', passport.authenticate('github'));
+
+app.get('/login', (req, res, next) => {
+  console.log('GOT TO LOGIN');
+});
+
+app.get('/auth/github/callback', (req, res, next) => {
+  console.log('GITHUB CALLBACK METHOD');
+  passport.authenticate('github', {
+    failureRedirect: '/login',
+    successRedirect: '/'
+  })(req, res, next),
+    (req, res, next) => {
+      res.redirect('/');
+    };
+});
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -75,8 +112,16 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.get('/auth/github/callback', (req, res) => {
-  //
-});
+/* Connect to database:
+ *****************************************/
+const { username, password, cluster, params } = config.db; // config takes from .env
+const mongoDB = `mongodb+srv://${username}:${password}@${cluster}/${params}`;
+
+mongoose.connect(mongoDB, { useNewUrlParser: true });
+mongoose.connection
+  .on('connected', () => {
+    console.log('Connected to database');
+  })
+  .on('error', console.error.bind(console, 'Error connecting to database:'));
 
 module.exports = app;

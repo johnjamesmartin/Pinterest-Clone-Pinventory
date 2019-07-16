@@ -1,0 +1,15 @@
+if (currentUser)
+  div(class="logout-container")
+    div(style="float: left; height: 40px; width: 20%;")
+      table(border="0" height="100%" width="100%")
+        tr
+          td(width="100%")
+            a(href="/log-out")
+              button(class="form-control btn btn-sm btn-outline-light" style="margin-left: 3px")="Log out"
+else
+  div(class="login-container")
+    div(style="float: left; height: 40px; width: 80%;")
+      a(href="/login/github")
+        button(class="form-control btn btn-sm btn-outline-success")
+          i.fa.fa-github
+          span=" Login"
