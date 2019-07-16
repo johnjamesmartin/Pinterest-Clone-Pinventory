@@ -1,11 +1,14 @@
 if (currentUser)
   div(class="logout-container")
-    div(style="float: left; height: 40px; width: 20%;")
-      table(border="0" height="100%" width="100%")
-        tr
-          td(width="100%")
-            a(href="/log-out")
-              button(class="form-control btn btn-sm btn-outline-light" style="margin-left: 3px")="Log out"
+    table(width="100%" height="100%")
+      tr
+        td(class="text-center")
+          span(class="form-control btn btn-sm btn-outline-none")
+            a(href="#")
+              img(class="mr-2" src=currentUser.avatar style="border-radius: 100%; width: 30px; height: 30px")
+              span()=currentUser.username
+        td
+          button(class="form-control btn btn-sm btn-outline-dark")="Logout"
 else
   div(class="login-container")
     div(style="float: left; height: 40px; width: 80%;")

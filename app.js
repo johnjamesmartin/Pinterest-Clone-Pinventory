@@ -7,13 +7,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
-//const expressValidator = require('express-validator');
+// const expressValidator = require('express-validator');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const config = require('./config');
+const User = require('./models/user');
 
 const app = express();
 
@@ -39,6 +40,13 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.use('/', indexRouter);
 //app.use('/users', usersRouter);
 
@@ -52,10 +60,24 @@ passport.use(
       callbackURL: 'http://localhost:3000/auth/github/callback'
     },
     (accessToken, refreshToken, profile, cb) => {
+      const username = profile.username;
+      const avatar = profile.photos[0].value;
+
+      const token = accessToken;
+
       console.log('TIME TO FIND OR CREATE USER');
-      User.findOrCreate({ githubId: profile.id }, function(err, user) {
-        return cb(err, user);
-      });
+
+      User.findOrCreate(
+        {
+          githubId: profile.id,
+          username: username,
+          avatar: avatar
+        },
+        function(err, user) {
+          console.log('GOT HERE');
+          return cb(err, user);
+        }
+      );
     }
   )
 );
@@ -68,15 +90,15 @@ passport.deserializeUser((obj, cb) => {
   cb(null, obj);
 });
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
-});
-
 app.get('/', (req, res, next) => {
   res.render('index');
+});
+
+app.get('/profile', require('connect-ensure-login').ensureLoggedIn(), function(
+  req,
+  res
+) {
+  res.render('profile', { user: req.user });
 });
 
 app.get('/login/github', passport.authenticate('github'));
