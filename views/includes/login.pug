@@ -4,11 +4,12 @@ if (currentUser)
       tr
         td(class="text-center")
           span(class="form-control btn btn-sm btn-outline-none")
-            a(href="#")
+            a(href="/profile")
               img(class="mr-2" src=currentUser.avatar style="border-radius: 100%; width: 30px; height: 30px")
               span()=currentUser.username
         td
-          button(class="form-control btn btn-sm btn-outline-dark")="Logout"
+          a(href="/logout")
+            button(class="form-control btn btn-sm btn-outline-secondary")="Logout"
 else
   div(class="login-container")
     div(style="float: left; height: 40px; width: 80%;")

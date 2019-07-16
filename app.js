@@ -107,6 +107,11 @@ app.get('/login', (req, res, next) => {
   console.log('GOT TO LOGIN');
 });
 
+app.get('/logout', (req, res, next) => {
+  req.logout();
+  res.redirect('/');
+});
+
 app.get('/auth/github/callback', (req, res, next) => {
   console.log('GITHUB CALLBACK METHOD');
   passport.authenticate('github', {

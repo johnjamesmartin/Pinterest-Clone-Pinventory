@@ -2,5 +2,8 @@ extends layout
 
 block content
   h1= title
-  p=currentUser.username
+  if(currentUser)
+    p=currentUser.username
+  else
+    p="Sign up or login?"
   p Welcome to #{title}
