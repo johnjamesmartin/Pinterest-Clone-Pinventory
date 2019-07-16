@@ -1,0 +1,79 @@
+.btn-dark {
+  @include gradient-1();
+}
+
+.btn-dark:hover {
+  @include gradient-1-lighten(10%);
+}
+
+.container {
+  border: $guidelines;
+  border-radius: 0.3rem;
+}
+
+.guidelines {
+  border: $guidelines;
+}
+
+.login-container {
+  align-items: center;
+  border: $guidelines;
+  display: flex;
+  height: 55px;
+  justify-content: center;
+  position: fixed;
+  right: 15px;
+  top: 7.5px;
+  width: 210px;
+  z-index: 5;
+}
+
+.logout-container {
+  border: $guidelines;
+  height: 55px;
+  position: fixed;
+  right: 15px;
+  top: 7.5px;
+  width: 290px;
+  z-index: 5;
+}
+
+.logout-container a {
+  color: $col-brightest !important;
+}
+
+.pin-link-external {
+  border: $guidelines;
+  border-radius: 0.3rem;
+  bottom: 40px;
+  color: $col-brightest;
+  cursor: pointer;
+  display: none;
+  left: 0;
+  margin: 10px;
+  padding: 3px;
+  position: absolute;
+  width: 60px;
+}
+
+.pin-save {
+  border: $guidelines;
+  border-radius: 0.3rem;
+  color: $col-brightest;
+  cursor: pointer;
+  display: none;
+  margin: 10px;
+  padding: 5px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 80px;
+}
+
+.grid-item:hover > .pin-link-external {
+  display: block;
+}
+
+.grid-item:hover > .pin-save {
+  display: block;
+}

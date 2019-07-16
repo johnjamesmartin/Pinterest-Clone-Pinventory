@@ -1,0 +1,22 @@
+.navbar-brand {
+  font-family: 'Niconne', cursive;
+  font-size: 30px;
+  margin-bottom: 5px;
+}
+
+.navbar {
+  @include gradient-1();
+  align-items: center;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  -ms-flex-align: center;
+  -ms-flex-pack: justify;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 5;
+}

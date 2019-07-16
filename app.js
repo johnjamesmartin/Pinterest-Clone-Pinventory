@@ -8,6 +8,7 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 // const expressValidator = require('express-validator');
+const sass = require('node-sass');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -38,6 +39,15 @@ app.use(
     resave: false,
     saveUninitialized: true
   })
+);
+
+sass.render(
+  {
+    file: 'style.scss'
+  },
+  function(err, result) {
+    /*...*/
+  }
 );
 
 app.use(passport.initialize());
@@ -91,7 +101,11 @@ passport.deserializeUser((obj, cb) => {
 });
 
 app.get('/', (req, res, next) => {
-  res.render('index');
+  console.log('here');
+  res.render('index', {
+    test: 'test',
+    pins: sample
+  });
 });
 
 app.get('/profile', require('connect-ensure-login').ensureLoggedIn(), function(

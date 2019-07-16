@@ -1,9 +1,19 @@
 extends layout
 
 block content
-  h1= title
-  if(currentUser)
-    p=currentUser.username
+  if (pins)
+    .grid
+      .grid-sizer
+      each pin in pins
+        .grid-item(style="padding: 5px;")
+          img(src=`${pin.src}`)
+          p=pin.description
+          div(class="pin-save btn btn-dark")
+            span="Save "
+            i.fa.fa-map-pin(style="font-size: 20px;")
+          div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")
+            i.fa.fa-arrow-right
+            span=" Link"
   else
-    p="Sign up or login?"
-  p Welcome to #{title}
+    p="No pins to display"
+  
