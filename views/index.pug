@@ -1,12 +1,22 @@
 extends layout
 
 block content
+  script.
+    function a(elem) {
+      id = elem.parentNode.id;
+      src = elem.src;
+      description = elem.alt;
+      //h5#exampleModalLabel.modal-title
+      //modal-body
+      document.getElementById('modal-body').innerHTML = `<img class="img-fluid" src="${elem.src}"/>`;
+      document.getElementById('exampleModalLabel').innerHTML = description;
+    }
   if (pins)
     .grid
       .grid-sizer
       each pin in pins
         .grid-item(style="padding: 5px;" id=pin.id)
-          img(src=`${pin.imageUrl}` alt=`${pin.description}`)
+          img(data-toggle="modal" data-target="#exampleModal" src=`${pin.imageUrl}` alt=`${pin.description}` onclick="a(this)")
           p=pin.description
           div(class="pin-save btn btn-dark")
             span="Save "
@@ -14,6 +24,7 @@ block content
           div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")
             i.fa.fa-arrow-right
             span=" Link"
+    include includes/modal.pug
   else
     p="No pins to display"
   

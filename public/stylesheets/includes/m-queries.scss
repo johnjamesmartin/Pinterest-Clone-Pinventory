@@ -27,7 +27,7 @@
 /* Medium Devices, Desktops */
 @media only screen and (max-width: 992px) {
   body {
-    margin-top: 60px;
+    margin-top: 0;
   }
   .login-container {
     top: 0;
@@ -41,7 +41,7 @@
 /* Small Devices, Tablets */
 @media only screen and (max-width: 768px) {
   body {
-    margin-top: 60px;
+    padding-top: 0;
   }
   .login-container {
     top: 0;
