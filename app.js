@@ -41,15 +41,6 @@ app.use(
   })
 );
 
-sass.render(
-  {
-    file: 'style.scss'
-  },
-  function(err, result) {
-    /*...*/
-  }
-);
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
@@ -58,7 +49,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-//app.use('/users', usersRouter);
+app.use('/users', usersRouter);
 
 /* Passport strategy
  *****************************************/

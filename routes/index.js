@@ -1,10 +1,11 @@
-var express = require('express');
-var router = express.Router();
-const sample = require('../sample');
+const express = require('express');
+const router = express.Router();
+
+/* Controller modules
+ *****************************************/
+const pin_controller = require('../controllers/pinController');
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Pins', pins: sample });
-});
+router.get('/', pin_controller.index);
 
 module.exports = router;

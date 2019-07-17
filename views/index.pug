@@ -5,8 +5,8 @@ block content
     .grid
       .grid-sizer
       each pin in pins
-        .grid-item(style="padding: 5px;")
-          img(src=`${pin.src}`)
+        .grid-item(style="padding: 5px;" id=pin.id)
+          img(src=`${pin.imageUrl}` alt=`${pin.description}`)
           p=pin.description
           div(class="pin-save btn btn-dark")
             span="Save "
