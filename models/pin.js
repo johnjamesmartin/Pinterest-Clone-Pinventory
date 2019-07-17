@@ -10,6 +10,7 @@ const PinSchema = new Schema({
   imageUrl: { type: String, required: true },
   description: { type: String, required: true },
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  genre: { type: Schema.Types.ObjectId, ref: 'Genre', required: true },
   savedBy: { type: Array, required: true }
 });
 

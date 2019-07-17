@@ -1,26 +1,19 @@
 extends layout
 
 block content
-  script.
-    function a(elem) {
-      id = elem.parentNode.id;
-      src = elem.src;
-      description = elem.alt;
-      //h5#exampleModalLabel.modal-title
-      //modal-body
-      document.getElementById('modal-body').innerHTML = `<img class="img-fluid" src="${elem.src}"/>`;
-      document.getElementById('exampleModalLabel').innerHTML = description;
-    }
   if (pins)
     .grid
       .grid-sizer
       each pin in pins
         .grid-item(style="padding: 5px;" id=pin.id)
-          img(data-toggle="modal" data-target="#exampleModal" src=`${pin.imageUrl}` alt=`${pin.description}` onclick="a(this)")
+          img(data-toggle="modal" data-target="#pin-modal" src=`${pin.imageUrl}` alt=`${pin.description}` onclick="updateModal(this)")
           p=pin.description
-          div(class="pin-save btn btn-dark")
-            span="Save "
-            i.fa.fa-map-pin(style="font-size: 20px;")
+
+          form(action=`/pin/save/${pin.id}` method="post")
+            div(class="pin-save btn btn-dark")
+              span="Save "
+              i.fa.fa-map-pin(style="font-size: 20px;")
+
           div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")
             i.fa.fa-arrow-right
             span=" Link"

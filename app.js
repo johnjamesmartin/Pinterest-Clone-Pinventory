@@ -12,6 +12,7 @@ const sass = require('node-sass');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const pinsRouter = require('./routes/pins');
 const passport = require('passport');
 const GitHubStrategy = require('passport-github').Strategy;
 const config = require('./config');
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/pins', pinsRouter);
 
 /* Passport strategy
  *****************************************/

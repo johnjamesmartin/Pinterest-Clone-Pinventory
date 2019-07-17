@@ -2,13 +2,13 @@ doctype html
 html
   head
     title= title
-    include includes/scripts.pug
+    include includes/metadata.pug
+    include includes/scripts-head.pug
     include includes/styles.pug
-    link(rel='stylesheet', href='/stylesheets/style.css')
   body
     include includes/navbar.pug
     include includes/login.pug
     div.container.mt-5(class="guidelines")
       br
       block content
-    script(src="/javascripts/grid.js")
+    include includes/scripts-body.pug

@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  h1=title
+  form(action=`/pins/create` method='post')
+    hr
+    label(for="imageUrl")="Image URL:"
+    input.form-control.col-lg-6(name="imageUrl" type='text' placeholder='http://someurl.com/image.jpeg')
+    br
+    label(for="genre")="Category:"
+    select.form-control.col-lg-6(name="genre")
+      each genre in genres
+        option=genre.name
+    br
+    label(for="description")="Description:"
+    textarea.form-control.col-lg-6(name="description" type='text' placeholder='Some image that I liked')
+    br
+    br
+    input.form-control.btn.btn-primary.col-lg-6(type='submit' value='Submit')
+    br

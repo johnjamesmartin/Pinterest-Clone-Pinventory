@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1="Pins"
+  table.table.table-striped
+    thead
+      tr
+        th="Pin"
+        th="Description"
+        th="User"
+    tbody
+      each pin in pins
+        tr
+          td=pin.id
+          td=pin.description
+          td=pin.user

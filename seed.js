@@ -10,6 +10,9 @@ const mongoose = require('mongoose');
 const mongoDB = userArgs[0];
 const User = require('./models/user');
 const Pin = require('./models/pin');
+const Genre = require('./models/genre');
+
+const categories = require('./categories');
 
 mongoose.connect(mongoDB, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
@@ -20,6 +23,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
  *****************************************/
 let users = [];
 let pins = [];
+let genres = [];
 
 /* Create a user:
  *****************************************/
@@ -45,11 +49,12 @@ const userCreate = (githubId, username, avatar, accessLevel, cb) => {
 
 /* Create a user:
  *****************************************/
-const pinCreate = (imageUrl, description, user, savedBy, cb) => {
+const pinCreate = (imageUrl, description, user, genreIndex, savedBy, cb) => {
   pindetail = {
     imageUrl: imageUrl,
     description: description,
     user: users[Math.floor(Math.random() * users.length)],
+    genre: genres[genreIndex],
     savedBy: savedBy
   };
 
@@ -62,6 +67,24 @@ const pinCreate = (imageUrl, description, user, savedBy, cb) => {
     console.log('Created new pin: ' + pin);
     pins.push(pin);
     cb(null, pin);
+  });
+};
+
+/* Create a user:
+ *****************************************/
+const genreCreate = (name, cb) => {
+  genredetail = {
+    name: name
+  };
+  const genre = new Genre(genredetail);
+  genre.save(err => {
+    if (err) {
+      cb(err, null);
+      return;
+    }
+    console.log('Created new genre: ' + genre);
+    genres.push(genre);
+    cb(null, genre);
   });
 };
 
@@ -91,42 +114,49 @@ const seedPins = [
     imageUrl: 'https://i.ibb.co/xMjpSJv/0gEkWmG.jpg',
     description: 'Ceiling of medieval castle in Cardiff, Wales',
     user: users[0],
+    genre: 4,
     savedBy: ['29063', '9187065']
   },
   {
     imageUrl: 'https://i.ibb.co/Jx3QwHb/e3E5zsh.jpg',
     description: 'Sliding barn door interior',
     user: users[1],
+    genre: 19,
     savedBy: ['9187065']
   },
   {
     imageUrl: 'https://i.ibb.co/SsHL3mx/nwlJ8Xv.jpg',
     description: 'Futuristic Japanese apartment',
     user: users[1],
+    genre: 19,
     savedBy: ['9187065']
   },
   {
     imageUrl: 'https://i.ibb.co/VpmxZ5B/pnP5IYH.jpg',
     description: 'Cool looking Iranian mosque interior',
     user: users[1],
+    genre: 4,
     savedBy: ['9187065']
   },
   {
     imageUrl: 'https://i.ibb.co/9HR6G90/R6Gp7Gr.jpg',
     description: 'Unique wooden stairwell',
     user: users[0],
+    genre: 19,
     savedBy: ['29063']
   },
   {
     imageUrl: 'https://i.ibb.co/StyHCmN/ri7rxeD.jpg',
     description: 'Nature is awesome!',
     user: users[2],
+    genre: 28,
     savedBy: []
   },
   {
     imageUrl: 'https://i.ibb.co/6nYzhsv/SHaiZ3m.jpg',
     description: 'Weird toilet',
     user: users[0],
+    genre: 20,
     savedBy: []
   }
 ];
@@ -168,17 +198,135 @@ const createUsers = cb => {
   );
 };
 
+/* Async:: create genres:
+ *****************************************/
+const createGenres = cb => {
+  async.series(
+    [
+      callback => {
+        genreCreate('Everything', callback); // 0
+      },
+      callback => {
+        genreCreate('Gifts', callback); // 1
+      },
+      callback => {
+        genreCreate('Videos', callback); // 2
+      },
+      callback => {
+        genreCreate('Animals & pets', callback); // 3
+      },
+      callback => {
+        genreCreate('Architecture', callback); // 4
+      },
+      callback => {
+        genreCreate('Art', callback); // 5
+      },
+      callback => {
+        genreCreate('Cars & motorcycles', callback); // 6
+      },
+      callback => {
+        genreCreate('Celebrations & events', callback); // 7
+      },
+      callback => {
+        genreCreate('Celebritries', callback); // 8
+      },
+      callback => {
+        genreCreate('DIY & crafts', callback); // 9
+      },
+      callback => {
+        genreCreate('Design', callback); // 10
+      },
+      callback => {
+        genreCreate('Education', callback); // 11
+      },
+      callback => {
+        genreCreate('Entertainment', callback); // 12
+      },
+      callback => {
+        genreCreate('Food & drink', callback); // 13
+      },
+      callback => {
+        genreCreate('Gardening', callback); // 14
+      },
+      callback => {
+        genreCreate('Geek', callback); // 15
+      },
+      callback => {
+        genreCreate('Hair & beauty', callback); // 16
+      },
+      callback => {
+        genreCreate('Health & fitness', callback); // 17
+      },
+      callback => {
+        genreCreate('History', callback); // 18
+      },
+      callback => {
+        genreCreate('Home decor', callback); // 19
+      },
+      callback => {
+        genreCreate('Humour', callback); // 20
+      },
+      callback => {
+        genreCreate('Illustrations & posters', callback); // 21
+      },
+      callback => {
+        genreCreate('Kids & parenting', callback); // 22
+      },
+      callback => {
+        genreCreate("Men's fashion", callback); // 23
+      },
+      callback => {
+        genreCreate('Outdoors', callback); // 24
+      },
+      callback => {
+        genreCreate('Photography', callback); // 25
+      },
+      callback => {
+        genreCreate('Products', callback); // 26
+      },
+      callback => {
+        genreCreate('Products', callback); // 27
+      },
+      callback => {
+        genreCreate('Quotes', callback); // 28
+      },
+      callback => {
+        genreCreate('Science & nature', callback); // 29
+      },
+      callback => {
+        genreCreate('Sport', callback); // 30
+      },
+      callback => {
+        genreCreate('Tattoos', callback); // 31
+      },
+      callback => {
+        genreCreate('Technology', callback); // 32
+      },
+      callback => {
+        genreCreate('Travel', callback); // 33
+      },
+      callback => {
+        genreCreate('Weddings', callback); // 34
+      },
+      callback => {
+        genreCreate("Women's fashion", callback); // 35
+      }
+    ],
+    cb
+  );
+};
+
 /* Async:: create pins:
  *****************************************/
 const createPins = cb => {
   async.series(
     [
       callback => {
-        console.log(seedPins[1]);
         pinCreate(
           seedPins[0].imageUrl,
           seedPins[0].description,
           seedPins[0].user,
+          seedPins[0].genre,
           seedPins[0].savedBy,
           callback
         ); // 0
@@ -188,6 +336,7 @@ const createPins = cb => {
           seedPins[1].imageUrl,
           seedPins[1].description,
           seedPins[1].user,
+          seedPins[1].genre,
           seedPins[1].savedBy,
           callback
         ); // 1
@@ -197,6 +346,7 @@ const createPins = cb => {
           seedPins[2].imageUrl,
           seedPins[2].description,
           seedPins[2].user,
+          seedPins[2].genre,
           seedPins[2].savedBy,
           callback
         ); // 2
@@ -206,6 +356,7 @@ const createPins = cb => {
           seedPins[3].imageUrl,
           seedPins[3].description,
           seedPins[3].user,
+          seedPins[3].genre,
           seedPins[3].savedBy,
           callback
         ); // 3
@@ -215,6 +366,7 @@ const createPins = cb => {
           seedPins[4].imageUrl,
           seedPins[4].description,
           seedPins[4].user,
+          seedPins[4].genre,
           seedPins[4].savedBy,
           callback
         ); // 4
@@ -224,6 +376,7 @@ const createPins = cb => {
           seedPins[5].imageUrl,
           seedPins[5].description,
           seedPins[5].user,
+          seedPins[5].genre,
           seedPins[5].savedBy,
           callback
         ); // 5
@@ -233,6 +386,7 @@ const createPins = cb => {
           seedPins[6].imageUrl,
           seedPins[6].description,
           seedPins[6].user,
+          seedPins[6].genre,
           seedPins[6].savedBy,
           callback
         ); // 6
@@ -247,6 +401,7 @@ const createPins = cb => {
 const dropCollections = () => {
   User.collection.drop();
   Pin.collection.drop();
+  Genre.collection.drop();
 };
 
 dropCollections();
@@ -254,7 +409,7 @@ dropCollections();
 /* Init::: Async series
  *****************************************/
 async.series(
-  [createUsers, createPins],
+  [createGenres, createUsers, createPins],
   // Optional callback
   (err, results) => {
     if (err) {
