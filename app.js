@@ -49,10 +49,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/pins', pinsRouter);
-
 /* Passport strategy
  *****************************************/
 passport.use(
@@ -93,31 +89,11 @@ passport.deserializeUser((obj, cb) => {
   cb(null, obj);
 });
 
-app.get('/', (req, res, next) => {
-  console.log('here');
-  res.render('index', {
-    test: 'test',
-    pins: sample
-  });
-});
-
-app.get('/profile', require('connect-ensure-login').ensureLoggedIn(), function(
-  req,
-  res
-) {
-  res.render('profile', { user: req.user });
-});
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/pins', pinsRouter);
 
 app.get('/login/github', passport.authenticate('github'));
-
-app.get('/login', (req, res, next) => {
-  console.log('GOT TO LOGIN');
-});
-
-app.get('/logout', (req, res, next) => {
-  req.logout();
-  res.redirect('/');
-});
 
 app.get('/auth/github/callback', (req, res, next) => {
   console.log('GITHUB CALLBACK METHOD');

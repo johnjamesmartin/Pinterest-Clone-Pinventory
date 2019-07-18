@@ -52,17 +52,22 @@ exports.pin_create_post = (req, res, next) => {
       .populate('user')
       .exec((err, user_obj) => {
         if (err) return next(err);
-        const pin = new Pin({
-          imageUrl: req.body.imageUrl,
-          user: user_obj[0],
-          description: req.body.description,
-          genre: req.body.genre,
-          savedBy: []
-        });
-        pin.save(err =>
-          err ? console.error(err) : console.log('Successfully created pin')
-        );
-        res.redirect('/pins/');
+        Genre.find({ name: req.body.genre })
+          .populate('genre')
+          .exec((err, genre_obj) => {
+            if (err) return next(err);
+            const pin = new Pin({
+              imageUrl: req.body.imageUrl,
+              user: user_obj[0],
+              description: req.body.description,
+              genre: genre_obj[0],
+              savedBy: []
+            });
+            pin.save(err =>
+              err ? console.error(err) : console.log('Successfully created pin')
+            );
+            res.redirect('/pins/');
+          });
       });
   } else {
     res.redirect('/login');

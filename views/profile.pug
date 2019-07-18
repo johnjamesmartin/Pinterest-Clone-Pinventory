@@ -5,5 +5,9 @@ block content
   p PROFILE
   p=user.username
   p=user.githubId
-  p="Your pins"
-  p="Your likes"
+  b="Your pins"
+  each user_pin in user_pins
+    a(href="/")
+      p=user_pin.description
+  br
+  b="Your favs"
