@@ -74,6 +74,6 @@
   display: block;
 }
 
-.grid-item:hover > .pin-save {
-  display: block;
+.grid-item:hover > form > .pin-save {
+  display: block !important;
 }

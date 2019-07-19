@@ -1,6 +1,18 @@
 extends layout
 
 block content
+  script.
+    const preventSubmitRefresh = (e) => {
+      const id = e.target.parentNode.id.split('-')[1];
+      e.preventDefault();
+      fetch(`/pins/save/${id}`, {method: 'POST'})
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        console.log(JSON.stringify(myJson));
+      });
+    }
   if (pins)
     .grid
       .grid-sizer
@@ -9,11 +21,11 @@ block content
           img(data-toggle="modal" data-target="#pin-modal" src=`${pin.imageUrl}` alt=`${pin.description}` onclick="updateModal(this)")
           p=pin.description
 
-          form(action=`/pin/save/${pin.id}` method="post")
-            div(class="pin-save btn btn-dark")
-              span="Save "
-              i.fa.fa-map-pin(style="font-size: 20px;")
-
+          if (user)
+            form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
+              button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
+                span="Save "
+                i.fa.fa-map-pin(id=`i-${pin.id}` style="font-size: 20px;")
           div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")
             i.fa.fa-arrow-right
             span=" Link"

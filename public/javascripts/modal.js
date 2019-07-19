@@ -4,6 +4,8 @@ const updateModal = elem => {
   const description = elem.alt;
   const modalBody = document.getElementById('modal-body');
   const modalLabel = document.getElementById('pin-modal-label');
-  modalBody.innerHTML = `<img class="img-fluid" src="${elem.src}"/>`;
+  modalBody.innerHTML = `<img style="border-radius: 0.3rem;" class="img-fluid" src="${
+    elem.src
+  }"/>`;
   modalLabel.innerHTML = description;
 };

@@ -1,37 +1,79 @@
-module.exports = [
-  {
-    src: 'https://i.imgur.com/R6Gp7Gr.jpg',
-    description: 'Rustic stair case design',
-    user: 'somedude79'
-  },
-  {
-    src: 'https://i.imgur.com/pnP5IYH.jpg',
-    description: 'Magical interior of mosque in Iran',
-    user: 'calgarydale'
-  },
-  {
-    src: 'https://i.imgur.com/SHaiZ3m.jpg',
-    description: 'Unique toilet to say the least',
-    user: 'ilovecats9999999'
-  },
-  {
-    src: 'https://i.imgur.com/ri7rxeD.jpg',
-    description: 'The beauty of nature',
-    user: 'girl_who_likes_to_surf'
-  },
-  {
-    src: 'https://i.imgur.com/0gEkWmG.png',
-    description: 'Ceiling of medieval castle in Cardiff, Wales',
-    user: 'cymru192'
-  },
-  {
-    src: 'https://i.imgur.com/nwlJ8Xv.jpg',
-    description: 'Future Japanese apartment',
-    user: 'nintendolover_9'
-  },
-  {
-    src: 'https://i.imgur.com/e3E5zsh.jpg',
-    description: 'Sliding barn door',
-    user: 'measuringdiagonal'
-  }
-];
+/* Sample data (users and pins):
+ *****************************************/
+const sample = {
+  // users:
+  users: [
+    {
+      githubId: '28441',
+      username: 'Someone',
+      avatar: 'https://avatars0.githubusercontent.com/u/28441?v=4',
+      accessLevel: 1
+    },
+    {
+      githubId: '29063',
+      username: 'johndoe',
+      avatar: 'https://avatars2.githubusercontent.com/u/29063?v=4',
+      accessLevel: 1
+    },
+    {
+      githubId: '9187065',
+      username: 'Username10',
+      avatar: 'https://avatars0.githubusercontent.com/u/9187065?v=4',
+      accessLevel: 1
+    }
+  ],
+  // pins:
+  pins: [
+    {
+      imageUrl: 'https://i.ibb.co/xMjpSJv/0gEkWmG.jpg',
+      description: 'Ceiling of medieval castle in Cardiff, Wales',
+      user: 0,
+      genre: 4,
+      savedBy: []
+    },
+    {
+      imageUrl: 'https://i.ibb.co/Jx3QwHb/e3E5zsh.jpg',
+      description: 'Sliding barn door interior',
+      user: 1,
+      genre: 19,
+      savedBy: []
+    },
+    {
+      imageUrl: 'https://i.ibb.co/SsHL3mx/nwlJ8Xv.jpg',
+      description: 'Futuristic Japanese apartment',
+      user: 1,
+      genre: 19,
+      savedBy: []
+    },
+    {
+      imageUrl: 'https://i.ibb.co/VpmxZ5B/pnP5IYH.jpg',
+      description: 'Cool looking Iranian mosque interior',
+      user: 1,
+      genre: 4,
+      savedBy: []
+    },
+    {
+      imageUrl: 'https://i.ibb.co/9HR6G90/R6Gp7Gr.jpg',
+      description: 'Unique wooden stairwell',
+      user: 0,
+      genre: 19,
+      savedBy: []
+    },
+    {
+      imageUrl: 'https://i.ibb.co/StyHCmN/ri7rxeD.jpg',
+      description: 'Nature is awesome!',
+      user: 2,
+      genre: 28,
+      savedBy: []
+    },
+    {
+      imageUrl: 'https://i.ibb.co/6nYzhsv/SHaiZ3m.jpg',
+      description: 'Weird toilet',
+      user: 0,
+      genre: 20,
+      savedBy: []
+    }
+  ]
+};
+
+module.exports = sample;

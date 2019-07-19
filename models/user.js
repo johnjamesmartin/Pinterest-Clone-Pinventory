@@ -9,7 +9,8 @@ var findOrCreate = require('mongoose-findorcreate');
 const UserSchema = new Schema({
   githubId: { type: String, required: true },
   username: { type: String, required: true },
-  avatar: { type: String, required: true }
+  avatar: { type: String, required: true },
+  favs: { type: Array }
 });
 
 UserSchema.plugin(findOrCreate);

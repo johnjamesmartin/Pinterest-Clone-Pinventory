@@ -2,4 +2,11 @@ extends layout
 
 block content
   h1="Login"
-  p Welcome
+  p
+    span="Use " 
+    a(href="http://www.github.com" target="_blank") Github
+    span=" to log in to Pinventory"
+  a(href="/login/github")
+    button(class="form-control btn btn-sm btn-outline-success" style="width: 200px;")
+      i.fa.fa-github
+      span=" Login"

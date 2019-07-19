@@ -16,7 +16,7 @@ router.get(
 );
 
 router.get('/login', (req, res, next) => {
-  console.log('GOT TO LOGIN');
+  res.render('login');
 });
 
 router.get('/logout', (req, res, next) => {

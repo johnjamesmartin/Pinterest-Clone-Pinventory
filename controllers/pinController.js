@@ -11,7 +11,7 @@ exports.index = (req, res) => {
     .populate('pin')
     .exec((err, list_pins) => {
       if (err) return next(err);
-      res.render('index', { pins: list_pins });
+      res.render('index', { pins: list_pins, user: res.locals.currentUser });
     });
 };
 
@@ -39,13 +39,6 @@ exports.pin_create_get = (req, res, next) => {
     });
 };
 
-/*
-imageUrl: { type: String, required: true },
-  description: { type: String, required: true },
-  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  genre: { type: Schema.Types.ObjectId, ref: 'Genre', required: true },
-  savedBy: { type: Array, required: true }
-*/
 exports.pin_create_post = (req, res, next) => {
   if (res.locals.currentUser) {
     User.find({ username: res.locals.currentUser.username })
@@ -71,5 +64,46 @@ exports.pin_create_post = (req, res, next) => {
       });
   } else {
     res.redirect('/login');
+  }
+};
+
+exports.pin_save_post = (req, res, next) => {
+  if (res.locals.currentUser) {
+    User.findOne({ username: res.locals.currentUser.username })
+      .populate('user')
+      .exec((err, user_obj) => {
+        if (err) return next(err);
+        Pin.findById(req.params.id)
+          .populate('pin')
+          .exec((err, pin_obj) => {
+            if (err) return next(err);
+
+            pin_obj.toObject();
+            if (!user_obj.favs.includes(pin_obj._id)) {
+              savedBy = pin_obj.savedBy;
+              savedBy.push(pin_obj._id);
+              pin_obj.savedBy = savedBy;
+              pin_obj.save(err => {
+                if (err) console.error(err);
+                console.log('Successfully added user to pin\'s "saved by"');
+              });
+            } else {
+              console.log('Already in pin\'s "saved by"');
+            }
+
+            user_obj.toObject();
+            if (!user_obj.favs.includes(pin_obj._id)) {
+              favs = user_obj.favs;
+              favs.push(pin_obj._id);
+              user_obj.favs = favs;
+              user_obj.save(err => {
+                if (err) console.error(err);
+                console.log('Successfully added pin to favourites');
+              });
+            } else {
+              console.log('Already have in favourites');
+            }
+          });
+      });
   }
 };
