@@ -17,15 +17,22 @@ block content
     .grid
       .grid-sizer
       each pin in pins
+        if (user)
         .grid-item(style="padding: 5px;" id=pin.id)
           img(data-toggle="modal" data-target="#pin-modal" src=`${pin.imageUrl}` alt=`${pin.description}` onclick="updateModal(this)")
           p=pin.description
-
           if (user)
-            form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
-              button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
-                span="Save "
-                i.fa.fa-map-pin(id=`i-${pin.id}` style="font-size: 20px;")
+            if (user.favs.includes(pin.id.toString()))
+              form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
+                button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
+                  span="Saved "
+                  i.fa.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
+            else
+              form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
+                button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
+                  span="Save "
+                  i.far.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
+                  
           div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")
             i.fa.fa-arrow-right
             span=" Link"

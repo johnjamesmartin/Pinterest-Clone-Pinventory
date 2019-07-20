@@ -56,6 +56,11 @@ const pinCreate = (
   savedBy,
   cb
 ) => {
+  console.log('----------');
+  console.log('Users:');
+  console.log(users[userIndex]);
+  console.log('---------');
+
   pindetail = {
     imageUrl: imageUrl,
     description: description,

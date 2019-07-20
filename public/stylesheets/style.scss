@@ -12,3 +12,15 @@ $guidelines: 0 dotted red;
 @import 'includes/ui';
 @import 'includes/m-queries';
 @import 'includes/animations';
+
+.img-profile-favourites,
+.img-profile-user-pins {
+  width: 65px;
+  height: 50px;
+  border-radius: 0.3rem;
+}
+
+.profile-pin-description,
+.profile-favourite-description {
+  font-size: 14px;
+}

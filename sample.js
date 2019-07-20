@@ -4,6 +4,12 @@ const sample = {
   // users:
   users: [
     {
+      githubId: '7034814',
+      username: 'johnjamesmartin',
+      avatar: 'https://avatars1.githubusercontent.com/u/7034814?v=4',
+      accessLevel: 1
+    },
+    {
       githubId: '28441',
       username: 'Someone',
       avatar: 'https://avatars0.githubusercontent.com/u/28441?v=4',

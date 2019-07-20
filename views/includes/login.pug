@@ -6,7 +6,7 @@ if (currentUser)
           span(class="form-control btn btn-sm btn-outline-none")
             a(href="/profile")
               img(class="mr-2" src=currentUser.avatar style="border-radius: 100%; width: 30px; height: 30px")
-              span()=currentUser.username
+              span=currentUser.username
         td
           a(href="/logout")
             button(class="form-control btn btn-sm btn-outline-secondary")="Logout"
@@ -15,5 +15,5 @@ else
     div(style="float: left; width: 200px;")
       a(href="/login/github")
         button(class="form-control btn btn-sm btn-outline-success" style="width: 200px;")
-          i.fa.fa-github
+          i.fab.fa-github
           span=" Login"

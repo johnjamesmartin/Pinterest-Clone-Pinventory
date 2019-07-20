@@ -11,6 +11,7 @@ exports.index = (req, res) => {
     .populate('pin')
     .exec((err, list_pins) => {
       if (err) return next(err);
+      if (res.locals.currentUser) console.log(res.locals.currentUser.favs);
       res.render('index', { pins: list_pins, user: res.locals.currentUser });
     });
 };
