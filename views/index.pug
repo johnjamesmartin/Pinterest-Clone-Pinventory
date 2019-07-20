@@ -50,8 +50,9 @@ block content
                   i.far.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
                   
           div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")
-            i.fa.fa-arrow-right
-            span=" Link"
+            a(href=`${pin.imageUrl}` target="_blank" class="text-light")
+              i.fa.fa-arrow-right
+              span=" Link"
     include includes/modal.pug
   else
     p="No pins to display"

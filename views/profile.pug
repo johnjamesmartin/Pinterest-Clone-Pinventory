@@ -2,10 +2,9 @@ extends layout
 
 block content
   br
-  h2="Profile"
-  h5.text-muted
-    span(style="font-weight: 300;")=`${user.username}`
-    span(style="font-weight: 300;")=` (#${user.githubId})`
+  h4
+    img.profile-avatar(src=user.avatar)
+    span.text-muted(style="font-weight: 300;")=` ${user.username}'s profile`
   br
   if (isLoggedIn && isLoggedIn.username == user.username)
     p=`Your pins (${user_pins.length})`
