@@ -4,7 +4,7 @@ if (currentUser)
       tr
         td(class="text-center")
           span(class="form-control btn btn-sm btn-outline-none")
-            a(href="/profile")
+            a(href=`/users/profile/${currentUser.username}`)
               img(class="mr-2" src=currentUser.avatar style="border-radius: 100%; width: 30px; height: 30px")
               span=currentUser.username
         td

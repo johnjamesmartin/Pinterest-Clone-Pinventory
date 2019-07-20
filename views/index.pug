@@ -4,6 +4,22 @@ block content
   script.
     const preventSubmitRefresh = (e) => {
       const id = e.target.parentNode.id.split('-')[1];
+      const element = document.getElementById(`btnsave-${id}`);
+      const txt = element.children[0].innerHTML.trim();
+
+      console.log(element);
+      //
+
+      return;
+      if (txt === 'Saved') {
+        element.innerHTML = "unsave"
+        //alert('you saved this')
+      } else {
+        //
+        element.innerHTML = "save"
+      }
+
+      //
       e.preventDefault();
       fetch(`/pins/save/${id}`, {method: 'POST'})
       .then(function(response) {
