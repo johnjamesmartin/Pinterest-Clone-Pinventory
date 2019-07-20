@@ -65,6 +65,7 @@ const pinCreate = (
     imageUrl: imageUrl,
     description: description,
     user: users[userIndex],
+    userInfo: users[userIndex].username,
     genre: genres[genreIndex],
     savedBy: savedBy
   };

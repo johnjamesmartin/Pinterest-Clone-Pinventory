@@ -79,30 +79,86 @@ exports.pin_save_post = (req, res, next) => {
           .exec((err, pin_obj) => {
             if (err) return next(err);
 
+            // my id ends in 6199
+
+            // MAKE PIN HAS USER:
+            //console.log('----------------------------');
+            //console.log('BEFORE:');
+            console.log(pin_obj.savedBy);
             pin_obj.toObject();
-            if (!user_obj.favs.includes(pin_obj._id)) {
+
+            // IF PIN DOES NOT HAVE USER IN SAVEDBY....
+            if (!pin_obj.savedBy.includes(user_obj._id)) {
+              //console.log('----------------------------');
+              //console.log('User not saved, let us save:');
               savedBy = pin_obj.savedBy;
-              savedBy.push(pin_obj._id);
+              savedBy.push(user_obj._id);
               pin_obj.savedBy = savedBy;
               pin_obj.save(err => {
                 if (err) console.error(err);
-                console.log('Successfully added user to pin\'s "saved by"');
+                //console.log('Successfully added user to pin\'s "saved by"');
+                //console.log('AFTER:');
+                console.log(pin_obj.savedBy);
+                res.sendStatus(200);
               });
             } else {
-              console.log('Already in pin\'s "saved by"');
+              //console.log('----------------------------');
+              //console.log('User saved, let us unsave:');
+              // REMOVE USER FROM PIN'S SAVED BY
+              savedBy = pin_obj.savedBy;
+              var indexOfIdToRemove = savedBy.indexOf(user_obj._id);
+              savedBy.splice(indexOfIdToRemove, 1);
+              pin_obj.savedBy = savedBy;
+
+              pin_obj.save(err => {
+                if (err) console.error(err);
+                //console.log('Successfully removed user to pin\'s "saved by"');
+                //console.log('AFTER:');
+                console.log(pin_obj.savedBy);
+                res.sendStatus(200);
+              });
             }
 
+            // console.log('----------------------------');
+
+            //console.log('----------------------------');
+            //console.log('BEFORE:');
+            //console.log(user_obj.favs);
+
             user_obj.toObject();
+            // IF USER HAS THIS PIN IN FAVS....
             if (!user_obj.favs.includes(pin_obj._id)) {
               favs = user_obj.favs;
               favs.push(pin_obj._id);
               user_obj.favs = favs;
               user_obj.save(err => {
                 if (err) console.error(err);
-                console.log('Successfully added pin to favourites');
+                //console.log('Successfully added pin to favourites');
+                //console.log('AFTER:');
+                //console.log(user_obj.favs);
               });
             } else {
-              console.log('Already have in favourites');
+              // REMOVE FROM FAVS
+
+              // console.log('----------------------------');
+              //console.log('Pin saved, let us unsave:');
+
+              favs = user_obj.favs;
+
+              var indexOfIdToRemove = favs.indexOf(pin_obj._id);
+              favs.splice(indexOfIdToRemove, 1);
+
+              // DOES NOT WORK....
+              //favs.push(pin_obj._id);
+              user_obj.favs = favs;
+              user_obj.save(err => {
+                if (err) console.error(err);
+                //console.log('Successfully removed pin to favourites');
+                //console.log('AFTER:');
+                //console.log(user_obj);
+              });
+
+              //console.log('Already have in favourites');
             }
           });
       });

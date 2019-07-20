@@ -7,7 +7,11 @@ block content
     span.text-muted(style="font-weight: 300;")=` ${user.username}'s profile`
   br
   if (isLoggedIn && isLoggedIn.username == user.username)
-    p=`Your pins (${user_pins.length})`
+    p
+      span=` Your pins (${user_pins.length})`
+      button.btn.btn-secondary.btn-sm(style="float: right;")
+        i(class="fas fa-edit")
+        span=" Edit"   
   else
     p=`${user.username}'s pins (${user_pins.length})`
   hr
@@ -28,7 +32,12 @@ block content
                   p.profile-pin-description=user_pin.description
   br
   if (isLoggedIn && isLoggedIn.username == user.username)
-    p=`Your favourites (${favourites.length})`
+    p
+      span=` Your favourites (${favourites.length})`
+      button.btn.btn-secondary.btn-sm(style="float: right;")
+        i(class="fas fa-edit")
+        span=" Edit"
+      
   else
     p=`${user.username}'s favourites (${favourites.length})`
   hr

@@ -7,22 +7,26 @@ block content
       const element = document.getElementById(`btnsave-${id}`);
       const txt = element.children[0].innerHTML.trim();
 
-      console.log(element);
-      //
-
-      return;
-      if (txt === 'Saved') {
-        element.innerHTML = "unsave"
-        //alert('you saved this')
+      //console.log(element);
+      /*
+      if (txt === 'Save') {
+        //element.innerHTML = "unsave"
+        element.innerHTML = '<span>Unsave </span><i class="fas fa-heart" id="i-' + id + '" style="font-size: 20px"/>';
       } else {
-        //
-        element.innerHTML = "save"
-      }
+         element.innerHTML = '<span>Save </span><i class="far fa-heart" id="i-' + id +'" style="font-size: 20px"/>';
+      }*/
 
-      //
       e.preventDefault();
       fetch(`/pins/save/${id}`, {method: 'POST'})
       .then(function(response) {
+        console.log('got here')
+        if (txt === 'Save') {
+          //element.innerHTML = "unsave"
+          element.innerHTML = '<span>Unsave </span><i class="fas fa-heart" id="i-' + id + '" style="font-size: 20px"/>';
+        } else {
+          element.innerHTML = '<span>Save </span><i class="far fa-heart" id="i-' + id +'" style="font-size: 20px"/>';
+        }
+
         return response.json();
       })
       .then(function(myJson) {
@@ -36,19 +40,22 @@ block content
         if (user)
         .grid-item(style="padding: 5px;" id=pin.id)
           img(data-toggle="modal" data-target="#pin-modal" src=`${pin.imageUrl}` alt=`${pin.description}` onclick="updateModal(this)")
-          p=pin.description
+          p(style="padding: 0; margin: 0;")=pin.description
+          p=pin.savedBy
+          small
+            span(class="text-muted")="Pin by "
+            a(href="#")=pin.userInfo
           if (user)
-            if (user.favs.includes(pin.id.toString()))
+            if (pin.savedBy.includes(user._id))
               form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
                 button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
-                  span="Saved "
-                  i.fa.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
+                  span="Unsave "
+                  i.fas.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
             else
               form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
                 button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
                   span="Save "
                   i.far.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
-                  
           div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")
             a(href=`${pin.imageUrl}` target="_blank" class="text-light")
               i.fa.fa-arrow-right
