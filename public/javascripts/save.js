@@ -10,6 +10,7 @@ const ConstructSaveButton = (label, iconPrefix, id) => {
 /* Toggle pin save:
  *****************************************/
 const togglePinSave = e => {
+  alert('got here');
   // Get pin id, cache the button element and its text
   const id = e.target.parentNode.id.split('-')[1];
   const element = document.getElementById(`btnsave-${id}`);
@@ -19,19 +20,15 @@ const togglePinSave = e => {
   e.preventDefault();
 
   // Post a request to toggle saving the pin
-  fetch(`/pins/save/${id}`, { method: 'POST' })
-    .then(response => {
-      // Toggle markup
-      element.innerHTML =
-        txt === 'Save'
-          ? ConstructSaveButton('Unsave', 'fas', id)
-          : ConstructSaveButton('Save', 'far', id);
-      // Return response
-      return response.json();
-    })
-    .then(myJson => {
-      console.log(JSON.stringify(myJson));
-    });
+  fetch(`/pins/save/${id}`, { method: 'POST' }).then(response => {
+    // Toggle markup
+    element.innerHTML =
+      txt === 'Save'
+        ? ConstructSaveButton('Unsave', 'fas', id)
+        : ConstructSaveButton('Save', 'far', id);
+    // Return response
+    return response.json();
+  });
 };
 
 /* Remove pin from favourites:
@@ -40,10 +37,6 @@ const removeFavourite = e => {
   // Get pin id, cache the button element and its parent tr index (table row)
   const id = e.target.parentNode.id.split('-')[1];
   const element = document.getElementById(`pindelete-${id}`);
-  const trIndex =
-    element.parentNode.parentNode.parentNode.children[0].innerText;
-
-  //get the index
 
   // Prevent form submitting
   e.preventDefault();

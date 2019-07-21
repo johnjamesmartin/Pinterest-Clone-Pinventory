@@ -15,7 +15,7 @@ block content
           if (user)
             if (pin.savedBy.includes(user._id))
               form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
-                button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
+                button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="togglePinSave(event)" type="submit")
                   span="Unsave "
                   i.fas.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
             else

@@ -132,10 +132,10 @@ exports.pin_save_post = (req, res, next) => {
   }
 };
 
-// POST pin delete
+// POST unsave pin
 // Permission: private (own users and admin only)
-// Description: Allow user to delete pin (remove user id from pin and pin id from user)
-exports.pin_delete_post = (req, res, next) => {
+// Description: Allow user to unsave pin (remove user id from pin and pin id from user)
+exports.pin_unsave_post = (req, res, next) => {
   if (res.locals.currentUser) {
     // Get user object by username:
     User.findOne({ username: res.locals.currentUser.username })

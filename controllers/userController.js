@@ -114,25 +114,21 @@ exports.user_remove_favourite_post = (req, res, next) => {
     .populate('user')
     .exec((err, user_obj) => {
       if (err) return next(err);
-      //
-      // REMOVE pin id from user
-      //
+
+      // Remove pin id from user favs:
       user_obj.toObject();
       favs = user_obj.favs;
       favs.splice(favs.indexOf(req.params.pin), 1);
       user_obj.favs = favs;
       user_obj.save(err => (err ? console.error(err) : res.sendStatus(200)));
 
-      //user_obj.favs;
-
+      // Remove user id from pin's saveBy arr:
       Pin.findOne({ _id: req.params.pin })
         .populate('pin')
         .exec((err, pin_obj) => {
           if (err) return next(err);
-          // remove user id from pin
           pin_obj.toObject();
           const savedBy = pin_obj.savedBy;
-
           savedBy.splice(savedBy.indexOf(user_obj._id), 1);
           pin_obj.savedBy = savedBy;
           pin_obj.save(err =>
