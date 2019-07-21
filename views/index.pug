@@ -20,7 +20,7 @@ block content
                   i.fas.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
             else
               form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
-                button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="preventSubmitRefresh(event)" type="submit")
+                button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="togglePinSave(event)" type="submit")
                   span="Save "
                   i.far.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
           div(class="pin-link-external btn btn-sm btn-dark" style="border-radius: 1rem; opacity: 0.9;")

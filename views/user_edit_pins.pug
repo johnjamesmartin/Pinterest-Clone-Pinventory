@@ -4,15 +4,31 @@ block content
 
   br
   a(href=`/users/profile/${user.username}`)
-    button.btn.btn-secondary.btn-sm
+    button.btn.btn-dark.btn-sm
       i.fas.fa-chevron-left
       span=" Back to profile"
   br
   br
   p="Edit your pins:"
-  table.col-lg-12.table.table-striped(border="0px")
+  table.col-lg-8.table.table-striped
     thead
       tr
+        th.text-center="Index"
         th.text-center="Pin"
-        th.text-center="Remove"
+        th.text-center="Delete"
     tbody
+      each pin, index in pins
+        tr
+          td
+              p.text-center=index + 1
+          td(class="profile-td-left-column")
+            div(class="profile-div-left-column")
+              if (pin.description.length > 20)
+                p(class="profile-td-p")=pin.description.substr(0, 20) + '...'
+              else
+                p(class="profile-td-p")=pin.description
+              img(src=pin.imageUrl class="profile-td-img")
+          td(class="profile-td-right-column")
+            div(class="profile-div-right-column")
+              button.btn.btn-danger
+                i.fa.fa-trash-alt

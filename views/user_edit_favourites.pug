@@ -1,28 +1,36 @@
 extends layout
-
 block content
-
   br
   a(href=`/users/profile/${user.username}`)
-    button.btn.btn-secondary.btn-sm
+    button.btn.btn-dark.btn-sm
       i.fas.fa-chevron-left
       span=" Back to profile"
   br
-  br
-  p="Edit your favourites:"
-  table.col-lg-12.table.table-striped(border="0px")
-    thead
-      tr
-        th.text-center="Favourite"
-        th.text-center="Remove"
-    tbody
-      each favourite in favourites
+  if (favourites.length >= 1)
+    br
+    p="Edit your favourites:"
+    table.col-lg-8.table.table-striped(id="favourites-table")
+      thead
         tr
-          td.text-center(width="50%")
-            p(style="padding: 0; margin: 0;")=favourite.description
-            br
-            img(src=favourite.imageUrl style="border-radius: 0.3rem; width: 65px; height: 65px; margin: 4px;")
-            br
-          td.text-center(width="50%")
-            button.btn.btn-danger
-              i.fa.fa-trash-alt
+          th.text-center="Index"
+          th.text-center="Favourite"
+          th.text-center="Remove"
+      tbody
+        each favourite, index in favourites
+          tr(id=`tr-${index}`)
+            td
+              p.text-center=index + 1
+            td(class="profile-td-left-column")
+              div(class="profile-div-left-column")
+                if (favourite.description.length > 20)
+                  p(class="profile-td-p")=favourite.description.substr(0, 20) + '...'
+                else
+                  p(class="profile-td-p")=favourite.description
+                img(src=favourite.imageUrl class="profile-td-img")
+            td(class="profile-td-right-column")
+              div(class="profile-div-right-column" id=`wrapper-${favourite.id}`)
+                button.btn.btn-danger(onclick="removeFavourite(event)" id=`pindelete-${favourite.id}`)
+                  i.fa.fa-trash-alt(id=`idelete-${favourite.id}`)
+  else
+    br
+    p="No favourites yet."

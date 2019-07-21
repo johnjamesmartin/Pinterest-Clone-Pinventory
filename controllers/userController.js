@@ -81,7 +81,6 @@ exports.user_edit_favourites_get = (req, res, next) => {
 // Description: Get user's favourites to edit
 exports.user_edit_pins_get = (req, res, next) => {
   const usernameStr = req.params.username.toString();
-
   User.findOne({ username: usernameStr })
     .populate('user')
     .exec((err, user_obj) => {
@@ -96,11 +95,49 @@ exports.user_edit_pins_get = (req, res, next) => {
             .exec((err, pins) => {
               if (err) return next(err);
               res.render('user_edit_pins', {
-                favourites: favs,
+                pins: pins,
                 user: user_obj
               });
             });
         }
       );
+    });
+};
+
+// GET edit favourites
+// Permission: private (own user or admin)
+// Description: Get user's favourites to edit
+exports.user_remove_favourite_post = (req, res, next) => {
+  console.log('User removed favourite');
+  const usernameStr = res.locals.currentUser.username.toString();
+  User.findOne({ username: usernameStr })
+    .populate('user')
+    .exec((err, user_obj) => {
+      if (err) return next(err);
+      //
+      // REMOVE pin id from user
+      //
+      user_obj.toObject();
+      favs = user_obj.favs;
+      favs.splice(favs.indexOf(req.params.pin), 1);
+      user_obj.favs = favs;
+      user_obj.save(err => (err ? console.error(err) : res.sendStatus(200)));
+
+      //user_obj.favs;
+
+      Pin.findOne({ _id: req.params.pin })
+        .populate('pin')
+        .exec((err, pin_obj) => {
+          if (err) return next(err);
+          // remove user id from pin
+          pin_obj.toObject();
+          const savedBy = pin_obj.savedBy;
+
+          savedBy.splice(savedBy.indexOf(user_obj._id), 1);
+          pin_obj.savedBy = savedBy;
+          pin_obj.save(err =>
+            err ? console.error(err) : console.log('Success')
+          );
+        });
     });
 };

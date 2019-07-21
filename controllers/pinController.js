@@ -131,3 +131,44 @@ exports.pin_save_post = (req, res, next) => {
       });
   }
 };
+
+// POST pin delete
+// Permission: private (own users and admin only)
+// Description: Allow user to delete pin (remove user id from pin and pin id from user)
+exports.pin_delete_post = (req, res, next) => {
+  if (res.locals.currentUser) {
+    // Get user object by username:
+    User.findOne({ username: res.locals.currentUser.username })
+      .populate('user')
+      .exec((err, user_obj) => {
+        if (err) return next(err);
+        // Get pin object by id:
+        Pin.findById(req.params.id)
+          .populate('pin')
+          .exec((err, pin_obj) => {
+            if (err) return next(err);
+            pin_obj.toObject();
+
+            const savedBy = pin_obj.savedBy;
+
+            // If pin object's "savedBy" does not include user id, remove it:
+            if (!pin_obj.savedBy.includes(user_obj._id)) {
+              savedBy.splice(savedBy.indexOf(user_obj._id), 1);
+              pin_obj.savedBy = savedBy;
+              pin_obj.save(err =>
+                err ? console.error(err) : res.sendStatus(200)
+              );
+            }
+            user_obj.toObject();
+
+            // If user object's "favs" does not include pin id, remove it:
+            if (!user_obj.favs.includes(pin_obj._id)) {
+              favs = user_obj.favs;
+              favs.splice(savedBy.indexOf(pin_obj._id), 1);
+              user_obj.favs = favs;
+              user_obj.save();
+            }
+          });
+      });
+  }
+};

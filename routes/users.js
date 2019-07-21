@@ -17,5 +17,9 @@ router.get(
   user_controller.user_edit_favourites_get
 );
 router.get('/edit/pins/:username', user_controller.user_edit_pins_get);
+router.post(
+  '/removefavourite/:pin',
+  user_controller.user_remove_favourite_post
+);
 
 module.exports = router;
