@@ -1,50 +1,17 @@
 extends layout
 
 block content
-  script.
-    const preventSubmitRefresh = (e) => {
-      const id = e.target.parentNode.id.split('-')[1];
-      const element = document.getElementById(`btnsave-${id}`);
-      const txt = element.children[0].innerHTML.trim();
-
-      //console.log(element);
-      /*
-      if (txt === 'Save') {
-        //element.innerHTML = "unsave"
-        element.innerHTML = '<span>Unsave </span><i class="fas fa-heart" id="i-' + id + '" style="font-size: 20px"/>';
-      } else {
-         element.innerHTML = '<span>Save </span><i class="far fa-heart" id="i-' + id +'" style="font-size: 20px"/>';
-      }*/
-
-      e.preventDefault();
-      fetch(`/pins/save/${id}`, {method: 'POST'})
-      .then(function(response) {
-        console.log('got here')
-        if (txt === 'Save') {
-          //element.innerHTML = "unsave"
-          element.innerHTML = '<span>Unsave </span><i class="fas fa-heart" id="i-' + id + '" style="font-size: 20px"/>';
-        } else {
-          element.innerHTML = '<span>Save </span><i class="far fa-heart" id="i-' + id +'" style="font-size: 20px"/>';
-        }
-
-        return response.json();
-      })
-      .then(function(myJson) {
-        console.log(JSON.stringify(myJson));
-      });
-    }
   if (pins)
     .grid
       .grid-sizer
       each pin in pins
         if (user)
-        .grid-item(style="padding: 5px;" id=pin.id)
+        .grid-item(id=pin.id)
           img(data-toggle="modal" data-target="#pin-modal" src=`${pin.imageUrl}` alt=`${pin.description}` onclick="updateModal(this)")
-          p(style="padding: 0; margin: 0;")=pin.description
-          p=pin.savedBy
+          p(style="padding: 0; margin: 0; margin-bottom: -5px !important;")=pin.description
           small
             span(class="text-muted")="Pin by "
-            a(href="#")=pin.userInfo
+            a(href=`/users/profile/${pin.userInfo}`)=pin.userInfo
           if (user)
             if (pin.savedBy.includes(user._id))
               form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)

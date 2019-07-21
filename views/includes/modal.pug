@@ -2,13 +2,10 @@
   .modal-dialog.modal-lg(role='document')
     .modal-content
       .modal-header
-        h5#pin-modal-label.modal-title Modal title
+        h4(style="font-weight: 300;")#pin-modal-label.modal-title Modal title
         button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
       .modal-body(id="modal-body")
         | ...
       .modal-footer(id="modal-footer")
         button.btn.btn-secondary(type='button' data-dismiss='modal') Close
-        button.btn.btn-dark(type='button')
-          span="Save "
-          i.fa.fa-map-pin(style="font-size: 20px;")

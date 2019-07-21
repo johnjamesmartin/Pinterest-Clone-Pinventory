@@ -17,38 +17,10 @@ exports.user_list_get = (req, res, next) => {
       });
     });
 };
-/*
-exports.user_profile_get = (req, res, next) => {
-  console.log(res.locals.currentUser);
-  if (res.locals.currentUser) {
-    User.findOne({ username: res.locals.currentUser.username })
-      .populate('user')
-      .exec((err, user_obj) => {
-        if (err) return next(err);
-        Pin.find(
-          {
-            _id: { $in: user_obj.favs }
-          },
-          (err, favs) => {
-            Pin.find({ user: res.locals.currentUser._id })
-              .populate('pin')
-              .exec((err, pins) => {
-                if (err) return next(err);
-                res.render('profile', {
-                  user: req.user,
-                  favourites: favs,
-                  user_pins: pins
-                });
-              });
-          }
-        );
-      });
-  } else {
-    res.redirect('/login');
-  }
-};
-*/
 
+// GET user profile
+// Permission: public
+// Description: Get and display user profile
 exports.user_profile_get = (req, res, next) => {
   const usernameStr = req.params.username.toString();
   User.findOne({ username: usernameStr })

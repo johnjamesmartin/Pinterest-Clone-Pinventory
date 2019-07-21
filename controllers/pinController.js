@@ -4,8 +4,9 @@ const Pin = require('../models/pin');
 const User = require('../models/user');
 const Genre = require('../models/genre');
 
-/* Homepage index route:
- *****************************************/
+// GET pin list
+// Permission: public
+// Description: Get a list of pins
 exports.index = (req, res) => {
   Pin.find()
     .populate('pin')
@@ -16,18 +17,22 @@ exports.index = (req, res) => {
     });
 };
 
+// GET pin list
+// Permission: public
+// Description: Get a list of pins (to render as a list view)
 exports.pin_list_get = (req, res, next) => {
-  Pin.find()
-    //.sort([['username', 'ascending']])
-    .exec((err, list_pins) => {
-      if (err) return next(err);
-      res.render('pin_list', {
-        title: 'Pin List',
-        pins: list_pins
-      });
+  Pin.find().exec((err, list_pins) => {
+    if (err) return next(err);
+    res.render('pin_list', {
+      title: 'Pin List',
+      pins: list_pins
     });
+  });
 };
 
+// GET pin create
+// Permission: private (logged in users only)
+// Description: Allow user to get pin creation form
 exports.pin_create_get = (req, res, next) => {
   Genre.find()
     .sort([['name', 'ascending']])
@@ -40,6 +45,9 @@ exports.pin_create_get = (req, res, next) => {
     });
 };
 
+// POST pin create
+// Permission: private (logged in users only)
+// Description: Allow user to post new pin they've created
 exports.pin_create_post = (req, res, next) => {
   if (res.locals.currentUser) {
     User.find({ username: res.locals.currentUser.username })
@@ -68,97 +76,52 @@ exports.pin_create_post = (req, res, next) => {
   }
 };
 
+// POST pin save
+// Permission: private (logged in users only)
+// Description: Allow user to save pin (push user id to pin and pin id to user)
 exports.pin_save_post = (req, res, next) => {
   if (res.locals.currentUser) {
+    // Get user object by username:
     User.findOne({ username: res.locals.currentUser.username })
       .populate('user')
       .exec((err, user_obj) => {
         if (err) return next(err);
+        // Get pin object by id:
         Pin.findById(req.params.id)
           .populate('pin')
           .exec((err, pin_obj) => {
             if (err) return next(err);
-
-            // my id ends in 6199
-
-            // MAKE PIN HAS USER:
-            //console.log('----------------------------');
-            //console.log('BEFORE:');
-            console.log(pin_obj.savedBy);
             pin_obj.toObject();
 
-            // IF PIN DOES NOT HAVE USER IN SAVEDBY....
+            const savedBy = pin_obj.savedBy;
+
+            // If pin object's "savedBy" does not include user id, add it — else remove:
             if (!pin_obj.savedBy.includes(user_obj._id)) {
-              //console.log('----------------------------');
-              //console.log('User not saved, let us save:');
-              savedBy = pin_obj.savedBy;
               savedBy.push(user_obj._id);
               pin_obj.savedBy = savedBy;
-              pin_obj.save(err => {
-                if (err) console.error(err);
-                //console.log('Successfully added user to pin\'s "saved by"');
-                //console.log('AFTER:');
-                console.log(pin_obj.savedBy);
-                res.sendStatus(200);
-              });
+              pin_obj.save(err =>
+                err ? console.error(err) : res.sendStatus(200)
+              );
             } else {
-              //console.log('----------------------------');
-              //console.log('User saved, let us unsave:');
-              // REMOVE USER FROM PIN'S SAVED BY
-              savedBy = pin_obj.savedBy;
-              var indexOfIdToRemove = savedBy.indexOf(user_obj._id);
-              savedBy.splice(indexOfIdToRemove, 1);
+              savedBy.splice(savedBy.indexOf(user_obj._id), 1);
               pin_obj.savedBy = savedBy;
-
-              pin_obj.save(err => {
-                if (err) console.error(err);
-                //console.log('Successfully removed user to pin\'s "saved by"');
-                //console.log('AFTER:');
-                console.log(pin_obj.savedBy);
-                res.sendStatus(200);
-              });
+              pin_obj.save(err =>
+                err ? console.error(err) : res.sendStatus(200)
+              );
             }
-
-            // console.log('----------------------------');
-
-            //console.log('----------------------------');
-            //console.log('BEFORE:');
-            //console.log(user_obj.favs);
-
             user_obj.toObject();
-            // IF USER HAS THIS PIN IN FAVS....
+
+            // If user object's "favs" does not include pin id, add it — else remove:
             if (!user_obj.favs.includes(pin_obj._id)) {
               favs = user_obj.favs;
               favs.push(pin_obj._id);
               user_obj.favs = favs;
-              user_obj.save(err => {
-                if (err) console.error(err);
-                //console.log('Successfully added pin to favourites');
-                //console.log('AFTER:');
-                //console.log(user_obj.favs);
-              });
+              user_obj.save();
             } else {
-              // REMOVE FROM FAVS
-
-              // console.log('----------------------------');
-              //console.log('Pin saved, let us unsave:');
-
               favs = user_obj.favs;
-
-              var indexOfIdToRemove = favs.indexOf(pin_obj._id);
-              favs.splice(indexOfIdToRemove, 1);
-
-              // DOES NOT WORK....
-              //favs.push(pin_obj._id);
+              favs.splice(favs.indexOf(pin_obj._id), 1);
               user_obj.favs = favs;
-              user_obj.save(err => {
-                if (err) console.error(err);
-                //console.log('Successfully removed pin to favourites');
-                //console.log('AFTER:');
-                //console.log(user_obj);
-              });
-
-              //console.log('Already have in favourites');
+              user_obj.save();
             }
           });
       });
