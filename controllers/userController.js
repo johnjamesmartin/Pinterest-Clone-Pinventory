@@ -47,3 +47,60 @@ exports.user_profile_get = (req, res, next) => {
       );
     });
 };
+
+// GET edit favourites
+// Permission: private (own user or admin)
+// Description: Get user's favourites to edit
+exports.user_edit_favourites_get = (req, res, next) => {
+  const usernameStr = req.params.username.toString();
+  User.findOne({ username: usernameStr })
+    .populate('user')
+    .exec((err, user_obj) => {
+      if (err) return next(err);
+      Pin.find(
+        {
+          _id: { $in: user_obj.favs }
+        },
+        (err, favs) => {
+          Pin.find({ user: user_obj._id })
+            .populate('pin')
+            .exec((err, pins) => {
+              if (err) return next(err);
+              res.render('user_edit_favourites', {
+                favourites: favs,
+                user: user_obj
+              });
+            });
+        }
+      );
+    });
+};
+
+// GET edit favourites
+// Permission: private (own user or admin)
+// Description: Get user's favourites to edit
+exports.user_edit_pins_get = (req, res, next) => {
+  const usernameStr = req.params.username.toString();
+
+  User.findOne({ username: usernameStr })
+    .populate('user')
+    .exec((err, user_obj) => {
+      if (err) return next(err);
+      Pin.find(
+        {
+          _id: { $in: user_obj.favs }
+        },
+        (err, favs) => {
+          Pin.find({ user: user_obj._id })
+            .populate('pin')
+            .exec((err, pins) => {
+              if (err) return next(err);
+              res.render('user_edit_pins', {
+                favourites: favs,
+                user: user_obj
+              });
+            });
+        }
+      );
+    });
+};

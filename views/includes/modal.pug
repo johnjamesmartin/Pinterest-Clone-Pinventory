@@ -1,11 +1,11 @@
 #pin-modal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='pin-modal-label' aria-hidden='true')
   .modal-dialog.modal-lg(role='document')
     .modal-content
-      .modal-header
-        h4(style="font-weight: 300;")#pin-modal-label.modal-title Modal title
+      .modal-header(style="border-bottom: 0;")
+        h4(style="font-weight: 400;")#pin-modal-label.modal-title Modal title
         button.close(type='button' data-dismiss='modal' aria-label='Close')
           span(aria-hidden='true') &times;
-      .modal-body(id="modal-body")
+      .modal-body(id="modal-body" style="padding: 0.3rem; text-align: center;")
         | ...
-      .modal-footer(id="modal-footer")
+      .modal-footer(id="modal-footer" style="border-top: 0;")
         button.btn.btn-secondary(type='button' data-dismiss='modal') Close

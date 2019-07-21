@@ -12,5 +12,10 @@ const user_controller = require('../controllers/userController');
 router.get('/', user_controller.user_list_get);
 
 router.get('/profile/:username', user_controller.user_profile_get);
+router.get(
+  '/edit/favourites/:username',
+  user_controller.user_edit_favourites_get
+);
+router.get('/edit/pins/:username', user_controller.user_edit_pins_get);
 
 module.exports = router;

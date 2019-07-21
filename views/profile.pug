@@ -9,9 +9,10 @@ block content
   if (isLoggedIn && isLoggedIn.username == user.username)
     p
       span=` Your pins (${user_pins.length})`
-      button.btn.btn-secondary.btn-sm(style="float: right;")
-        i(class="fas fa-edit")
-        span=" Edit"   
+      a(href=`/users/edit/pins/${user.username}`)
+        button.btn.btn-secondary.btn-sm(style="float: right;")
+          i(class="fas fa-edit")
+          span=" Edit"   
   else
     p=`${user.username}'s pins (${user_pins.length})`
   hr
@@ -34,9 +35,10 @@ block content
   if (isLoggedIn && isLoggedIn.username == user.username)
     p
       span=` Your favourites (${favourites.length})`
-      button.btn.btn-secondary.btn-sm(style="float: right;")
-        i(class="fas fa-edit")
-        span=" Edit"
+      a(href=`/users/edit/favourites/${user.username}`)
+        button.btn.btn-secondary.btn-sm(style="float: right;")
+          i(class="fas fa-edit")
+          span=" Edit"
       
   else
     p=`${user.username}'s favourites (${favourites.length})`

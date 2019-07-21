@@ -1,3 +1,12 @@
+/*
+Permission levels:
+-------------------
+  0 = Banned
+  1 = Basic
+  2 = Admin
+  3 = Super
+*/
+
 /* Sample data (users and pins):
  *****************************************/
 const sample = {
@@ -7,7 +16,7 @@ const sample = {
       githubId: '7034814',
       username: 'johnjamesmartin',
       avatar: 'https://avatars1.githubusercontent.com/u/7034814?v=4',
-      accessLevel: 1
+      accessLevel: 3
     },
     {
       githubId: '28441',

@@ -36,3 +36,12 @@ $guidelines: 0 dotted red;
   width: 65px;
   margin-right: 5px;
 }
+
+.permission-denied-container {
+  align-items: center;
+  border-radius: 0.3rem;
+  display: flex;
+  height: 400px;
+  justify-content: center;
+  transform: scale(0.8);
+}

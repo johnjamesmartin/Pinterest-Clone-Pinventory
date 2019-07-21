@@ -1,0 +1,28 @@
+extends layout
+
+block content
+
+  br
+  a(href=`/users/profile/${user.username}`)
+    button.btn.btn-secondary.btn-sm
+      i.fas.fa-chevron-left
+      span=" Back to profile"
+  br
+  br
+  p="Edit your favourites:"
+  table.col-lg-12.table.table-striped(border="0px")
+    thead
+      tr
+        th.text-center="Favourite"
+        th.text-center="Remove"
+    tbody
+      each favourite in favourites
+        tr
+          td.text-center(width="50%")
+            p(style="padding: 0; margin: 0;")=favourite.description
+            br
+            img(src=favourite.imageUrl style="border-radius: 0.3rem; width: 65px; height: 65px; margin: 4px;")
+            br
+          td.text-center(width="50%")
+            button.btn.btn-danger
+              i.fa.fa-trash-alt

@@ -7,13 +7,12 @@ body {
 }
 
 html {
-  overflow-y: scroll;
   color: $col-darkest;
+  overflow-y: scroll;
 }
 
 p {
   border: $guidelines;
-  font-weight: 300;
 }
 
 small {

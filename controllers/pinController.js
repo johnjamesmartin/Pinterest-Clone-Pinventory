@@ -34,15 +34,19 @@ exports.pin_list_get = (req, res, next) => {
 // Permission: private (logged in users only)
 // Description: Allow user to get pin creation form
 exports.pin_create_get = (req, res, next) => {
-  Genre.find()
-    .sort([['name', 'ascending']])
-    .exec((err, list_genres) => {
-      if (err) return next(err);
-      res.render('pin_create', {
-        title: 'Create Pin',
-        genres: list_genres
+  if (res.locals.currentUser) {
+    Genre.find()
+      .sort([['name', 'ascending']])
+      .exec((err, list_genres) => {
+        if (err) return next(err);
+        res.render('pin_create', {
+          title: 'Create Pin',
+          genres: list_genres
+        });
       });
-    });
+  } else {
+    res.render('permission_denied');
+  }
 };
 
 // POST pin create

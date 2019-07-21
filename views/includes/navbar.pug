@@ -11,9 +11,12 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       if (currentUser)
         li.nav-item
           a.nav-link(href=`/users/profile/${currentUser.username}`) Profile
-      li.nav-item
-        a.nav-link(href='/users') Users
-      li.nav-item
-        a.nav-link(href='/pins') Pins
-      li.nav-item
-        a.nav-link(href='/pins/create') Create pin
+      if (currentUser && currentUser.accessLevel >= 2)
+        li.nav-item
+          a.nav-link(href='/users') Users
+      if (currentUser && currentUser.accessLevel >= 2)
+        li.nav-item
+          a.nav-link(href='/pins') Pins
+      if (currentUser)
+        li.nav-item
+          a.nav-link(href='/pins/create') Create pin
