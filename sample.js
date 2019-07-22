@@ -16,25 +16,29 @@ const sample = {
       githubId: '7034814',
       username: 'johnjamesmartin',
       avatar: 'https://avatars1.githubusercontent.com/u/7034814?v=4',
-      accessLevel: 3
+      accessLevel: 3,
+      pinsSubmitted: 3
     },
     {
       githubId: '28441',
       username: 'Someone',
       avatar: 'https://avatars0.githubusercontent.com/u/28441?v=4',
-      accessLevel: 1
+      accessLevel: 1,
+      pinsSubmitted: 3
     },
     {
       githubId: '29063',
       username: 'johndoe',
       avatar: 'https://avatars2.githubusercontent.com/u/29063?v=4',
-      accessLevel: 1
+      accessLevel: 1,
+      pinsSubmitted: 1
     },
     {
       githubId: '9187065',
       username: 'Username10',
       avatar: 'https://avatars0.githubusercontent.com/u/9187065?v=4',
-      accessLevel: 1
+      accessLevel: 0,
+      pinsSubmitted: 0
     }
   ],
   // pins:

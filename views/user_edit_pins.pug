@@ -29,6 +29,6 @@ block content
                 p(class="profile-td-p")=pin.description
               img(src=pin.imageUrl class="profile-td-img")
           td(class="profile-td-right-column")
-            div(class="profile-div-right-column")
-              button.btn.btn-danger
+            div(class="profile-div-right-column" id=`wrapper-${pin.id}`)
+              button.btn.btn-danger(onclick="removePin(event)" id=`pindelete-${pin.id}`)
                 i.fa.fa-trash-alt

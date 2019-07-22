@@ -16,6 +16,7 @@ router.get('/create', pin_controller.pin_create_get);
 router.post('/create', pin_controller.pin_create_post);
 router.post('/save/:id', pin_controller.pin_save_post);
 router.post('/unsave/:id', pin_controller.pin_unsave_post);
+router.post('/delete/:id', pin_controller.pin_delete_post);
 
 router.get('/genre/create', genre_controller.genre_create_get);
 router.post('/genre/create', genre_controller.genre_create_post);

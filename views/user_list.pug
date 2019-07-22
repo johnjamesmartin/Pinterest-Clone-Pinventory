@@ -5,18 +5,27 @@ block content
   table.table.table-striped
     thead
       tr
-        th="Username"
-        th="Avatar"
-        th="Github ID"
-        th="Pinned"
-        th="Saved"
+        th.text-center="Username"
+        th.text-center="Avatar"
+        th.text-center="Github ID"
+        th.text-center="Pins"
+        th.text-center="Favourites"
+        th.text-center="Account type"
     tbody
       each user in user_list
         tr
-          td
+          td.text-center
             a(href=`/users/profile/${user.username}`)=user.username
-          td
+          td.text-center
             img(src=user.avatar style="width: 30px;")
-          td=user.githubId
-          td="--"
-          td="--"
+          td.text-center=user.githubId
+          td.text-center=user.pinsSubmitted
+          td.text-center=user.favs.length
+          if (user.accessLevel === 0)
+            td.text-center="Banned"
+          else if (user.accessLevel === 1)
+            td.text-center="Basic user"
+          else if (user.accessLevel === 2)
+            td.text-center="Admin"
+          else if (user.accessLevel === 3)
+            td.text-center="Super admin"

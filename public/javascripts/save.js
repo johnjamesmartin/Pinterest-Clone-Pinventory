@@ -10,11 +10,12 @@ const ConstructSaveButton = (label, iconPrefix, id) => {
 /* Toggle pin save:
  *****************************************/
 const togglePinSave = e => {
-  alert('got here');
   // Get pin id, cache the button element and its text
   const id = e.target.parentNode.id.split('-')[1];
   const element = document.getElementById(`btnsave-${id}`);
   const txt = element.children[0].innerHTML.trim();
+
+  if (txt === 'Save') alert('Saved pin!');
 
   // Prevent form submitting
   e.preventDefault();
@@ -49,4 +50,28 @@ const removeFavourite = e => {
     .then(myJson => {
       console.log(JSON.stringify(myJson));
     });
+};
+
+const removePin = e => {
+  const id = e.target.parentNode.id.split('-')[1];
+  const element = document.getElementById(`pindelete-${id}`);
+
+  const confirmation = confirm(
+    'Are you sure you want to delete this pin?\n\nThis action cannot be undone!'
+  );
+
+  // Prevent form submitting
+  e.preventDefault();
+
+  if (confirmation) {
+    // Post a request to delete pin
+    fetch(`/pins/delete/${id}`, { method: 'POST' })
+      .then(response => {
+        element.parentNode.innerHTML = 'Deleted!';
+        return response.json();
+      })
+      .then(myJson => {
+        console.log(JSON.stringify(myJson));
+      });
+  }
 };

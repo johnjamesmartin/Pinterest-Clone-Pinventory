@@ -27,12 +27,20 @@ let genres = [];
 
 /* Create a user:
  *****************************************/
-const userCreate = (githubId, username, avatar, accessLevel, cb) => {
+const userCreate = (
+  githubId,
+  username,
+  avatar,
+  accessLevel,
+  pinsSubmitted,
+  cb
+) => {
   userdetail = {
     githubId: githubId,
     username: username,
     avatar: avatar,
-    accessLevel: accessLevel
+    accessLevel: accessLevel,
+    pinsSubmitted: pinsSubmitted
   };
   const user = new User(userdetail);
   user.save(err => {
@@ -110,6 +118,7 @@ const createUsers = cb => {
           sample.users[0].username,
           sample.users[0].avatar,
           sample.users[0].accessLevel,
+          sample.users[0].pinsSubmitted,
           callback
         ); // 0
       },
@@ -119,6 +128,7 @@ const createUsers = cb => {
           sample.users[1].username,
           sample.users[1].avatar,
           sample.users[1].accessLevel,
+          sample.users[1].pinsSubmitted,
           callback
         ); // 1
       },
@@ -128,8 +138,19 @@ const createUsers = cb => {
           sample.users[2].username,
           sample.users[2].avatar,
           sample.users[2].accessLevel,
+          sample.users[2].pinsSubmitted,
           callback
         ); // 2
+      },
+      callback => {
+        userCreate(
+          sample.users[3].githubId,
+          sample.users[3].username,
+          sample.users[3].avatar,
+          sample.users[3].accessLevel,
+          sample.users[3].pinsSubmitted,
+          callback
+        ); // 3
       }
     ],
     cb

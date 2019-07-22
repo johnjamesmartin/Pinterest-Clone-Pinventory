@@ -11,7 +11,8 @@ const UserSchema = new Schema({
   username: { type: String, required: true },
   avatar: { type: String, required: true },
   accessLevel: { type: Number, required: true },
-  favs: { type: Array }
+  favs: { type: Array },
+  pinsSubmitted: { type: Number }
 });
 
 UserSchema.plugin(findOrCreate);

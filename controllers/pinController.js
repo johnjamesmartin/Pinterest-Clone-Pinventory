@@ -54,25 +54,38 @@ exports.pin_create_get = (req, res, next) => {
 // Description: Allow user to post new pin they've created
 exports.pin_create_post = (req, res, next) => {
   if (res.locals.currentUser) {
-    User.find({ username: res.locals.currentUser.username })
+    User.findOne({ username: res.locals.currentUser.username })
       .populate('user')
       .exec((err, user_obj) => {
         if (err) return next(err);
-        Genre.find({ name: req.body.genre })
+
+        user_obj.toObject();
+
+        pinsSubmitted = user_obj.pinsSubmitted;
+        pinsSubmitted = pinsSubmitted + 1;
+        user_obj.pinsSubmitted = pinsSubmitted;
+        user_obj.save(err =>
+          err
+            ? console.error(err)
+            : console.log('Successfully updated pin submitted')
+        );
+
+        Genre.findOne({ name: req.body.genre })
           .populate('genre')
           .exec((err, genre_obj) => {
             if (err) return next(err);
             const pin = new Pin({
               imageUrl: req.body.imageUrl,
-              user: user_obj[0],
+              user: user_obj,
               description: req.body.description,
-              genre: genre_obj[0],
+              genre: genre_obj,
+              userInfo: res.locals.currentUser.username,
               savedBy: []
             });
             pin.save(err =>
               err ? console.error(err) : console.log('Successfully created pin')
             );
-            res.redirect('/pins/');
+            res.redirect(`/users/profile/${res.locals.currentUser.username}`);
           });
       });
   } else {
@@ -170,5 +183,20 @@ exports.pin_unsave_post = (req, res, next) => {
             }
           });
       });
+  }
+};
+
+// POST delete pin
+// Permission: private (own users and admin only)
+// Description: Allow user to delete pin (remove user id from pin and pin id from user)
+exports.pin_delete_post = (req, res, next) => {
+  console.log('GOT TO PIN DELETE POST');
+  console.log(req.params.id);
+  if (res.locals.currentUser) {
+    Pin.deleteOne({ _id: req.params.id }, err => {
+      if (err) return handleError(err);
+      console.log('Successfully deleted pin');
+      res.sendStatus(200);
+    });
   }
 };

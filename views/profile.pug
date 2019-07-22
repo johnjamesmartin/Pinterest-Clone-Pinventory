@@ -35,10 +35,11 @@ block content
   if (isLoggedIn && isLoggedIn.username == user.username)
     p
       span=` Your favourites (${favourites.length})`
-      a(href=`/users/edit/favourites/${user.username}`)
-        button.btn.btn-dark.btn-sm(style="float: right;")
-          i(class="fas fa-edit")
-          span=" Edit"
+      if (favourites.length > 0)
+        a(href=`/users/edit/favourites/${user.username}`)
+          button.btn.btn-dark.btn-sm(style="float: right;")
+            i(class="fas fa-edit")
+            span=" Edit"
       
   else
     p=`${user.username}'s favourites (${favourites.length})`
