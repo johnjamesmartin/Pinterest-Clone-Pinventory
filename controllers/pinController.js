@@ -190,7 +190,6 @@ exports.pin_unsave_post = (req, res, next) => {
 // Permission: private (own users and admin only)
 // Description: Allow user to delete pin (remove user id from pin and pin id from user)
 exports.pin_delete_post = (req, res, next) => {
-  console.log('GOT TO PIN DELETE POST');
   console.log(req.params.id);
   if (res.locals.currentUser) {
     Pin.deleteOne({ _id: req.params.id }, err => {
@@ -199,4 +198,27 @@ exports.pin_delete_post = (req, res, next) => {
       res.sendStatus(200);
     });
   }
+};
+
+// GET pin instance
+// Permission: public
+// Description: Get pin page
+exports.pin_instance_get = (req, res, next) => {
+  console.log('GOT PIN INSTANCE GET');
+  Pin.findById(req.params.id)
+    .populate('pin')
+    .exec((err, pin_obj) => {
+      pin_obj.toObject();
+      User.findOne({ username: pin_obj.userInfo })
+        .populate('pin')
+        .exec((err, user_obj) => {
+          if (err) return next(err);
+          user_obj.toObject();
+          res.render('pin_instance', {
+            loggedIn: res.locals.currentUser || false,
+            user: user_obj,
+            pin: pin_obj
+          });
+        });
+    });
 };

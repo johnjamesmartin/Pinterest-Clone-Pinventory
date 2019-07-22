@@ -70,6 +70,16 @@
   width: 90px;
 }
 
+.pin-save-instance {
+  border: $guidelines;
+  border-radius: 0.3rem;
+  color: $col-brightest;
+  cursor: pointer;
+  display: block;
+  padding: 5px;
+  width: 90px;
+}
+
 .grid-item:hover > .pin-link-external {
   display: block;
 }

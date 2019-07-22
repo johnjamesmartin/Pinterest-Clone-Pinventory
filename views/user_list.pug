@@ -17,7 +17,7 @@ block content
           td.text-center
             a(href=`/users/profile/${user.username}`)=user.username
           td.text-center
-            img(src=user.avatar style="width: 30px;")
+            img(onerror="defaultImage(this)" src=user.avatar style="width: 30px;")
           td.text-center=user.githubId
           td.text-center=user.pinsSubmitted
           td.text-center=user.favs.length

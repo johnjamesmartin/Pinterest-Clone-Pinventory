@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  br
+  h1=pin.description
+  div
+    table
+      tr
+        td(style="padding-left: 10px; padding-right: 10px;")
+          span(style="font-weight: 300;")=`Pin by `
+          span
+            a(href="#")=pin.userInfo
+          td(style="padding-left: 10px; padding-right: 10px;")
+            i.fas.fa-link.text-muted
+            span
+              a(href=pin.imageUrl)=" Image URL"
+          td(style="padding-left: 10px; padding-right: 10px;")
+            if (loggedIn)
+              if (pin.savedBy.includes(user._id))
+                form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
+                  button(id=`btnsave-${pin.id}` class="pin-save-instance btn btn-dark" onclick="togglePinSave(event)" type="submit")
+                    span="Unsave "
+                    i.fas.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
+              else
+                form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
+                  button(id=`btnsave-${pin.id}` class="pin-save-instance btn btn-dark" onclick="togglePinSave(event)" type="submit")
+                    span="Save "
+                    i.far.fa-heart(id=`i-${pin.id}` style="font-size: 20px;")
+    br
+    img(onerror="defaultImage(this)" src=`${pin.imageUrl}` width="600px" style="border-radius: 0.3rem;")

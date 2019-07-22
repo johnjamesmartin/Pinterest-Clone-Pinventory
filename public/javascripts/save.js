@@ -57,7 +57,6 @@ const removeFavourite = e => {
 const deletePin = e => {
   const id = e.target.parentNode.id.split('-')[1];
   const element = document.getElementById(`pindelete-${id}`);
-
   const confirmation = confirm(
     'Are you sure you want to delete this pin?\n\nThis action cannot be undone!'
   );

@@ -3,7 +3,7 @@ extends layout
 block content
   br
   h4
-    img.profile-avatar(src=user.avatar)
+    img(onerror="defaultImage(this)").profile-avatar(src=user.avatar)
     span.text-muted(style="font-weight: 300;")=` ${user.username}'s profile`
   br
   if (isLoggedIn && isLoggedIn.username == user.username)
@@ -23,7 +23,7 @@ block content
           tr
             td(width="50%" height="55px")
               a(href="/")
-                img.img-profile-user-pins(src=user_pin.imageUrl)
+                img(onerror="defaultImage(this)").img-profile-user-pins(src=user_pin.imageUrl)
           tr
             td(width="50%")
               a(href="/")
@@ -52,7 +52,7 @@ block content
               tr
                 td(width="50%")
                   a(href="/")
-                    img.img-profile-favourites(src=favourite.imageUrl)
+                    img(onerror="defaultImage(this)").img-profile-favourites(src=favourite.imageUrl)
               tr
                 td(width="50%")
                   a(href="/")

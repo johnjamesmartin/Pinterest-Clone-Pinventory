@@ -27,7 +27,7 @@ block content
                 p(class="profile-td-p")=pin.description.substr(0, 20) + '...'
               else
                 p(class="profile-td-p")=pin.description
-              img(src=pin.imageUrl class="profile-td-img")
+              img(onerror="defaultImage(this)" src=pin.imageUrl class="profile-td-img")
           td(class="profile-td-right-column")
             div(class="profile-div-right-column" id=`wrapper-${pin.id}`)
               button.btn.btn-danger(onclick="deletePin(event)" id=`pindelete-${pin.id}`)
