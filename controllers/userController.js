@@ -53,55 +53,69 @@ exports.user_profile_get = (req, res, next) => {
 // Description: Get user's favourites to edit
 exports.user_edit_favourites_get = (req, res, next) => {
   const usernameStr = req.params.username.toString();
-  User.findOne({ username: usernameStr })
-    .populate('user')
-    .exec((err, user_obj) => {
-      if (err) return next(err);
-      Pin.find(
-        {
-          _id: { $in: user_obj.favs }
-        },
-        (err, favs) => {
-          Pin.find({ user: user_obj._id })
-            .populate('pin')
-            .exec((err, pins) => {
-              if (err) return next(err);
-              res.render('user_edit_favourites', {
-                favourites: favs,
-                user: user_obj
+  if (
+    res.locals.currentUser &&
+    res.locals.currentUser.username == usernameStr
+  ) {
+    User.findOne({ username: usernameStr })
+      .populate('user')
+      .exec((err, user_obj) => {
+        if (err) return next(err);
+        Pin.find(
+          {
+            _id: { $in: user_obj.favs }
+          },
+          (err, favs) => {
+            Pin.find({ user: user_obj._id })
+              .populate('pin')
+              .exec((err, pins) => {
+                if (err) return next(err);
+                res.render('user_edit_favourites', {
+                  favourites: favs,
+                  user: user_obj
+                });
               });
-            });
-        }
-      );
-    });
+          }
+        );
+      });
+  } else {
+    res.redirect('/login');
+  }
 };
 
-// GET edit favourites
+// GET edit pins
 // Permission: private (own user or admin)
-// Description: Get user's favourites to edit
+// Description: Get user's pins to edit
 exports.user_edit_pins_get = (req, res, next) => {
   const usernameStr = req.params.username.toString();
-  User.findOne({ username: usernameStr })
-    .populate('user')
-    .exec((err, user_obj) => {
-      if (err) return next(err);
-      Pin.find(
-        {
-          _id: { $in: user_obj.favs }
-        },
-        (err, favs) => {
-          Pin.find({ user: user_obj._id })
-            .populate('pin')
-            .exec((err, pins) => {
-              if (err) return next(err);
-              res.render('user_edit_pins', {
-                pins: pins,
-                user: user_obj
+  if (
+    res.locals.currentUser &&
+    res.locals.currentUser.username == usernameStr
+  ) {
+    User.findOne({ username: usernameStr })
+      .populate('user')
+      .exec((err, user_obj) => {
+        if (err) return next(err);
+        Pin.find(
+          {
+            _id: { $in: user_obj.favs }
+          },
+          (err, favs) => {
+            Pin.find({ user: user_obj._id })
+              .populate('pin')
+              .exec((err, pins) => {
+                if (err) return next(err);
+                res.render('user_edit_pins', {
+                  pins: pins,
+                  user: user_obj
+                });
               });
-            });
-        }
-      );
-    });
+          }
+        );
+      });
+  } else {
+    res.redirect('/login');
+  }
 };
 
 // GET edit favourites

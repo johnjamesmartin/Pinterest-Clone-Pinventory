@@ -52,7 +52,9 @@ const removeFavourite = e => {
     });
 };
 
-const removePin = e => {
+/* Delete pin:
+ *****************************************/
+const deletePin = e => {
   const id = e.target.parentNode.id.split('-')[1];
   const element = document.getElementById(`pindelete-${id}`);
 

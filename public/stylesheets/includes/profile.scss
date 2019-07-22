@@ -1,0 +1,56 @@
+.img-profile-favourites,
+.img-profile-user-pins {
+  border-radius: 0.3rem;
+  height: 50px;
+  width: 65px;
+}
+
+.img-profile-favourites:hover,
+.img-profile-user-pins:hover {
+  filter: brightness(90%);
+}
+
+.profile-pin-description,
+.profile-favourite-description {
+  font-size: 14px;
+}
+
+.profile-avatar {
+  border-radius: 100%;
+  height: 65px;
+  margin-right: 5px;
+  width: 65px;
+}
+
+.profile-td-left-column,
+.profile-td-right-column {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 50%;
+}
+
+.profile-div-left-column {
+  border: 0;
+  height: 100px;
+}
+
+.profile-div-right-column {
+  align-items: center;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+}
+
+.profile-td-img {
+  border-radius: 0.3rem;
+  height: 65px;
+  margin: 4px;
+  margin-bottom: 10px;
+  width: 65px;
+}
+
+.profile-td-p {
+  margin: 0;
+  padding: 0;
+}
