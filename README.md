@@ -1,5 +1,7 @@
 # Pinventory
 
+See app in action: https://johnjamesmartin-pinterest-clone-pinventory.glitch.me/
+
 This is a Pinterest clone that I called "Pinventory" (I know, it's a cheesy name). The project was made as part of a FreeCodeCamp track and combines Node, Express, Pug, Mongo and Mongoose, JavaScript, etc. to make a basic full stack app.
 
 ## Installation
@@ -7,22 +9,31 @@ This is a Pinterest clone that I called "Pinventory" (I know, it's a cheesy name
 Download repo and install dependencies (cd into folder and type "npm install"). Create a .env file and set environment variables like so (replacing values with your own — including values from a database you will need to set up (MongoDB.net offers a free sandbox for this)):
 
 DB_USER="someuser"
+
 DB_PASS="somepass"
+
 DB_CLUSTER="clusterX-something.mongodb.net"
+
 DB_PARAMS="collectionName?retryWrites=true&w=majority"
 
 PASSPORT_SECRET="somesecret"
 
 GITHUB_APP_ID="someappid"
+
 GITHUB_APP_SECRET="someappsecret"
 
 SUPER_ID="userwhowillbesuperadminid"
+
 SUPER_USERNAME="userwhowillbesuperadminemail"
+
 SUPER_PASSWORD="userwhowillbesuperadminpassword"
+
 SUPER_EMAIL="userwhowillbesuperadminemail"
 
 BASIC_USERNAME="basicuserusername"
+
 BASIC_PASSWORD="basicuserpassword"
+
 BASIC_EMAIL="emailaddresshere"
 
 ## License
