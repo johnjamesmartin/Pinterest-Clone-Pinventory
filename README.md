@@ -36,6 +36,12 @@ BASIC_PASSWORD="basicuserpassword"
 
 BASIC_EMAIL="emailaddresshere"
 
+## Seed sample data
+
+I highly recommend you seed some sample data in order to see the app functioning properly. To do this, run the following in the command line (replacing relevant uppercase fields):
+
+node seed mongodb+srv://USERNAME:PASSWORD@DB/DBCOLLECTION?retryWrites=true&w=majority
+
 ## License
 
 MIT License
