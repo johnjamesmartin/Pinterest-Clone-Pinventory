@@ -4,7 +4,7 @@ This is a Pinterest clone that I called "Pinventory" (I know, it's a cheesy name
 
 ## Installation
 
-Download and install dependencies (cd into folder and type "npm install"). Create a .env file and set environment variables like the following — replacing the following values with your own (you will need to create a database (MongoDB.net offers a good sandbox option that's free)):
+Download repo and install dependencies (cd into folder and type "npm install"). Create a .env file and set environment variables like so (replacing values to your own — including values from a database you will need to set up (MongoDB.net offers a free sandbox for this)):
 
 DB_USER="someuser"
 DB_PASS="somepass"
