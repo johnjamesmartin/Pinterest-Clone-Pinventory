@@ -169,8 +169,8 @@ const sample = {
 
 //
 
-function shuffle(array) {
-  var currentIndex = array.length,
+const shuffle = array => {
+  let currentIndex = array.length,
     temporaryValue,
     randomIndex;
 
@@ -187,7 +187,7 @@ function shuffle(array) {
   }
 
   return array;
-}
+};
 
 sample.pins = shuffle(sample.pins);
 

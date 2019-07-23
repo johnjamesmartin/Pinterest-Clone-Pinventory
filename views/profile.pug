@@ -26,11 +26,11 @@ block content
         table(border="0px" width="100%" height="100%")
           tr
             td(width="50%" height="55px")
-              a(href="/")
+              a(href=`/pins/${user_pin._id}`)
                 img(onerror="defaultImage(this)").img-profile-user-pins(src=user_pin.imageUrl)
           tr
             td(width="50%")
-              a(href="/")
+              a(href=`/pins/${user_pin._id}`)
                 if (user_pin.description.length > 15)
                   p.profile-pin-description=user_pin.description.substr(0, 15) + '...'
                 else
@@ -55,11 +55,11 @@ block content
             table(border="0px" width="100%" height="100%")
               tr
                 td(width="50%")
-                  a(href="/")
+                  a(href=`/pins/${favourite._id}`)
                     img(onerror="defaultImage(this)").img-profile-favourites(src=favourite.imageUrl)
               tr
                 td(width="50%")
-                  a(href="/")
+                  a(href=`/pins/${favourite._id}`)
                     if (favourite.description.length > 15)
                       p.profile-favourite-description=favourite.description.substr(0, 15) + '...'
                     else

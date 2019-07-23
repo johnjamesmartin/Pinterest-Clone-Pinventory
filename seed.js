@@ -173,7 +173,7 @@ const createGenres = cb => {
         genreCreate('Videos', callback); // 2
       },
       callback => {
-        genreCreate('Animals & pets', callback); // 3
+        genreCreate('Animals and pets', callback); // 3
       },
       callback => {
         genreCreate('Architecture', callback); // 4
@@ -182,16 +182,16 @@ const createGenres = cb => {
         genreCreate('Art', callback); // 5
       },
       callback => {
-        genreCreate('Cars & motorcycles', callback); // 6
+        genreCreate('Cars and motorcycles', callback); // 6
       },
       callback => {
-        genreCreate('Celebrations & events', callback); // 7
+        genreCreate('Celebrations and events', callback); // 7
       },
       callback => {
         genreCreate('Celebritries', callback); // 8
       },
       callback => {
-        genreCreate('DIY & crafts', callback); // 9
+        genreCreate('DIY and crafts', callback); // 9
       },
       callback => {
         genreCreate('Design', callback); // 10
@@ -203,7 +203,7 @@ const createGenres = cb => {
         genreCreate('Entertainment', callback); // 12
       },
       callback => {
-        genreCreate('Food & drink', callback); // 13
+        genreCreate('Food and drink', callback); // 13
       },
       callback => {
         genreCreate('Gardening', callback); // 14
@@ -212,10 +212,10 @@ const createGenres = cb => {
         genreCreate('Geek', callback); // 15
       },
       callback => {
-        genreCreate('Hair & beauty', callback); // 16
+        genreCreate('Hair and beauty', callback); // 16
       },
       callback => {
-        genreCreate('Health & fitness', callback); // 17
+        genreCreate('Health and fitness', callback); // 17
       },
       callback => {
         genreCreate('History', callback); // 18
@@ -227,10 +227,10 @@ const createGenres = cb => {
         genreCreate('Humour', callback); // 20
       },
       callback => {
-        genreCreate('Illustrations & posters', callback); // 21
+        genreCreate('Illustrations and posters', callback); // 21
       },
       callback => {
-        genreCreate('Kids & parenting', callback); // 22
+        genreCreate('Kids and parenting', callback); // 22
       },
       callback => {
         genreCreate("Men's fashion", callback); // 23
@@ -251,7 +251,7 @@ const createGenres = cb => {
         genreCreate('Quotes', callback); // 28
       },
       callback => {
-        genreCreate('Science & nature', callback); // 29
+        genreCreate('Science and nature', callback); // 29
       },
       callback => {
         genreCreate('Sport', callback); // 30

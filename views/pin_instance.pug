@@ -6,15 +6,18 @@ block content
   div
     table
       tr
-        td(style="padding-left: 10px; padding-right: 10px;")
+        td(class="pin-instance-td")
           span(style="font-weight: 300;")=`Pin by `
           span
             a(href="#")=pin.userInfo
-          td(style="padding-left: 10px; padding-right: 10px;")
+          td(class="pin-instance-td")
             i.fas.fa-link.text-muted
             span
               a(href=pin.imageUrl)=" Image URL"
-          td(style="padding-left: 10px; padding-right: 10px;")
+          td(class="pin-instance-td")
+            i.fas.fa-thumbtack.text-muted
+            span.text-muted=` ${pin.genreInfo}`
+          td(class="pin-instance-td")
             if (loggedIn)
               if (pin.savedBy.includes(user._id))
                 form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)

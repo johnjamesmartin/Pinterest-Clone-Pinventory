@@ -123,7 +123,6 @@ exports.user_edit_pins_get = (req, res, next) => {
 // Permission: private (own user or admin)
 // Description: Get user's favourites to edit
 exports.user_remove_favourite_post = (req, res, next) => {
-  console.log('User removed favourite');
   const usernameStr = res.locals.currentUser.username.toString();
   User.findOne({ username: usernameStr })
     .populate('user')
