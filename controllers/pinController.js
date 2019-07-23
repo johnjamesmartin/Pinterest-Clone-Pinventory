@@ -4,16 +4,40 @@ const Pin = require('../models/pin');
 const User = require('../models/user');
 const Genre = require('../models/genre');
 
+//{ $in: user_obj.favs }
+
 // GET pin list
 // Permission: public
 // Description: Get a list of pins
 exports.index = (req, res) => {
-  Pin.find()
+  const genre = () => {
+    if (!req.body.genre) {
+      return {};
+    } else {
+      return { genreInfo: { $in: genre } };
+    }
+  };
+  Pin.find(genre())
     .populate('pin')
     .exec((err, list_pins) => {
       if (err) return next(err);
-      if (res.locals.currentUser) console.log(res.locals.currentUser.favs);
-      res.render('index', { pins: list_pins, user: res.locals.currentUser });
+
+      Genre.find()
+        .populate('pin')
+        .exec((err, list_genres) => {
+          if (err) return next(err);
+          User.find()
+            .populate('user')
+            .exec((err, list_users) => {
+              if (err) return next(err);
+              res.render('index', {
+                pins: list_pins,
+                users: list_users,
+                genres: list_genres,
+                user: res.locals.currentUser
+              });
+            });
+        });
     });
 };
 

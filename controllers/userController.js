@@ -2,6 +2,7 @@
  *****************************************/
 const User = require('../models/user');
 const Pin = require('../models/pin');
+const Genre = require('../models/genre');
 
 // GET list of users
 // Permission: private (admin only)
@@ -148,6 +149,35 @@ exports.user_remove_favourite_post = (req, res, next) => {
           pin_obj.save(err =>
             err ? console.error(err) : console.log('Success')
           );
+        });
+    });
+};
+
+// GET list of users
+// Permission: private (admin only)
+// Description: Display a list of users
+exports.user_wall_get = (req, res, next) => {
+  Pin.find()
+    .populate('pin')
+    .exec((err, list_pins) => {
+      if (err) return next(err);
+
+      Genre.find()
+        .populate('pin')
+        .exec((err, list_genres) => {
+          if (err) return next(err);
+          User.find()
+            .populate('user')
+            .exec((err, list_users) => {
+              if (err) return next(err);
+              res.render('user_wall', {
+                pins: list_pins,
+                users: list_users,
+                genres: list_genres,
+                user: req.params.username,
+                isLoggedIn: res.locals.currentUser || false
+              });
+            });
         });
     });
 };

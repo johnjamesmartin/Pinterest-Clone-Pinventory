@@ -12,6 +12,7 @@ const PinSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   userInfo: { type: String },
   genre: { type: Schema.Types.ObjectId, ref: 'Genre', required: true },
+  genreInfo: { type: String },
   savedBy: { type: Array, required: true }
 });
 

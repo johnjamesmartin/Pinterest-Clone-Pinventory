@@ -21,5 +21,6 @@ router.post(
   '/removefavourite/:pin',
   user_controller.user_remove_favourite_post
 );
+router.get('/wall/:username', user_controller.user_wall_get);
 
 module.exports = router;

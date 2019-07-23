@@ -6,6 +6,10 @@ block content
     img(onerror="defaultImage(this)").profile-avatar(src=user.avatar)
     span.text-muted(style="font-weight: 300;")=` ${user.username}'s profile`
   br
+  a(href=`/users/wall/${user.username}`)
+    button.btn.btn-secondary.btn-sm="View pins wall"
+  br
+  br
   if (isLoggedIn && isLoggedIn.username == user.username)
     p
       span=` Your pins (${user_pins.length})`

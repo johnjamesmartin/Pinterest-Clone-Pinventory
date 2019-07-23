@@ -14,12 +14,18 @@ block content
         label(style="font-size: 80%;" for="refineUser")="Pins by user: "
         select(id="refine-user-select" name="refineUser" onchange="refineGrid()").form-control
           each user_instance in users
-            option=user_instance.username
+            if(user_instance.username == user)
+              option(selected)=user_instance.username
+            else
+              option=user_instance.username
         script.
           const opt = document.createElement('option');
           opt.appendChild( document.createTextNode('All') );
           document.getElementById('refine-user-select').appendChild(opt);
-          document.getElementById('refine-user-select').value = 'All';
+          setTimeout(() => {
+            refineGrid();
+          }, 100);
+          
   hr
   if (pins)
     .grid
@@ -36,7 +42,7 @@ block content
           small
             span(class="text-muted")="Pin by "
             a(href=`/users/profile/${pin.userInfo}`)=pin.userInfo
-          if (user)
+          if (isLoggedIn)
             if (pin.savedBy.includes(user._id))
               form(action=`/pins/save/${pin.id}` method="post" id=`formsave-${pin.id}`)
                 button(id=`btnsave-${pin.id}` class="pin-save btn btn-dark" onclick="togglePinSave(event)" type="submit")

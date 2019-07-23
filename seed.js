@@ -74,6 +74,7 @@ const pinCreate = (
     description: description,
     user: users[userIndex],
     userInfo: users[userIndex].username,
+    genreInfo: genres[genreIndex].name,
     genre: genres[genreIndex],
     savedBy: savedBy
   };
@@ -244,7 +245,7 @@ const createGenres = cb => {
         genreCreate('Products', callback); // 26
       },
       callback => {
-        genreCreate('Products', callback); // 27
+        genreCreate('Projects', callback); // 27
       },
       callback => {
         genreCreate('Quotes', callback); // 28
@@ -349,6 +350,86 @@ const createPins = cb => {
           sample.pins[6].savedBy,
           callback
         ); // 6
+      },
+      callback => {
+        pinCreate(
+          sample.pins[7].imageUrl,
+          sample.pins[7].description,
+          sample.pins[7].user,
+          sample.pins[7].genre,
+          sample.pins[7].savedBy,
+          callback
+        ); // 7
+      },
+      callback => {
+        pinCreate(
+          sample.pins[8].imageUrl,
+          sample.pins[8].description,
+          sample.pins[8].user,
+          sample.pins[8].genre,
+          sample.pins[8].savedBy,
+          callback
+        ); // 8
+      },
+      callback => {
+        pinCreate(
+          sample.pins[9].imageUrl,
+          sample.pins[9].description,
+          sample.pins[9].user,
+          sample.pins[9].genre,
+          sample.pins[9].savedBy,
+          callback
+        ); // 9
+      },
+      callback => {
+        pinCreate(
+          sample.pins[10].imageUrl,
+          sample.pins[10].description,
+          sample.pins[10].user,
+          sample.pins[10].genre,
+          sample.pins[10].savedBy,
+          callback
+        ); // 10
+      },
+      callback => {
+        pinCreate(
+          sample.pins[11].imageUrl,
+          sample.pins[11].description,
+          sample.pins[11].user,
+          sample.pins[11].genre,
+          sample.pins[11].savedBy,
+          callback
+        ); // 11
+      },
+      callback => {
+        pinCreate(
+          sample.pins[12].imageUrl,
+          sample.pins[12].description,
+          sample.pins[12].user,
+          sample.pins[12].genre,
+          sample.pins[12].savedBy,
+          callback
+        ); // 12
+      },
+      callback => {
+        pinCreate(
+          sample.pins[13].imageUrl,
+          sample.pins[13].description,
+          sample.pins[13].user,
+          sample.pins[13].genre,
+          sample.pins[13].savedBy,
+          callback
+        ); // 13
+      },
+      callback => {
+        pinCreate(
+          sample.pins[14].imageUrl,
+          sample.pins[14].description,
+          sample.pins[14].user,
+          sample.pins[14].genre,
+          sample.pins[14].savedBy,
+          callback
+        ); // 14
       }
     ],
     cb
